@@ -1,4 +1,5 @@
-import { clearUser } from "@/store/slices/user.slice"
+// import { clearUser } from "@/store/slices/user.slice"
+import { clearUser } from "@/store/slice/user-slice"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { Button } from "../ui/button"

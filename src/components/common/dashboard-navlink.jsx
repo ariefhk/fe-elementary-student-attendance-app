@@ -1,4 +1,4 @@
-import useIsSublinkActive from "@/hook/useIsActiveNavlink"
+import useIsSublinkActive from "@/hook/useIsSublinkActive"
 import { cn } from "@/lib/utils"
 import { getUser } from "@/store/slice/user-slice"
 import PropTypes from "prop-types"

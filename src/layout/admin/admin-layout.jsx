@@ -1,7 +1,7 @@
-// import DashboardNavlink from "@/components/common/dashboard-navlink"
+import DashboardNavlink from "@/components/common/dashboard-navlink"
 import LogoutButton from "@/components/common/logout-button"
 import TopLoadingBar from "@/components/common/top-loading-bar"
-// import { adminNavLink } from "@/constants/admin-link"
+import { adminNavLink } from "@/constant/admin-navlink"
 import { Outlet } from "react-router-dom"
 
 export default function AdminLayout() {
@@ -10,7 +10,7 @@ export default function AdminLayout() {
       <TopLoadingBar />
       <div className="flex h-screen font-poppins flex-col md:flex-row md:overflow-hidden">
         <div className="w-full flex-none md:w-64 h-full hidden md:block ">
-          {/* <DashboardNavlink dashLinks={adminNavLink} /> */}
+          <DashboardNavlink dashLinks={adminNavLink} />
         </div>
         <div className="flex-grow md:overflow-y-auto ">
           <div className="flex flex-col">
