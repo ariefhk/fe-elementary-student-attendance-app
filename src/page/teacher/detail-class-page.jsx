@@ -46,7 +46,8 @@ export default function TeacherDetailClassPage() {
     <>
       <div className=" flex justify-between">
         <h1 className="text-fs24_36 font-semibold text-color-1">
-          Kelas {isSuccessGetDetailClasses ? detailClasses?.name : "Loading..."}
+          Detail Kelas{" "}
+          {isSuccessGetDetailClasses ? detailClasses?.name : "Loading..."}
         </h1>
       </div>
       <div className="flex flex-col gap-y-10">

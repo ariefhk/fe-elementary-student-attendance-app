@@ -11,10 +11,10 @@ import AdminListTeacherPage from "@/page/admin/list-teacher-page"
 import AdminProfilePage from "@/page/admin/profile-page"
 import LoginPage from "@/page/auth/login-page"
 import GuestNotFoundPage from "@/page/not-found/not-found-page"
+import TeacherClassPresencePage from "@/page/teacher/class-presence-page"
 import TeacherDashboardPage from "@/page/teacher/dashboard-page"
 import TeacherDetailClassPage from "@/page/teacher/detail-class-page"
 import TeacherListClassPage from "@/page/teacher/list-class-page"
-import TeacherListPresencePage from "@/page/teacher/list-presence-page"
 import TeacherProfilePage from "@/page/teacher/profile-page"
 import { Route, Routes } from "react-router-dom"
 
@@ -56,7 +56,7 @@ export default function AppRouter() {
         />
         <Route
           path="class/:classId/presence"
-          element={<TeacherListPresencePage />}
+          element={<TeacherClassPresencePage />}
         />
 
         {/*
