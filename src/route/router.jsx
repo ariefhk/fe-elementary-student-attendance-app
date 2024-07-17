@@ -4,6 +4,7 @@ import AdminDashboardPage from "@/page/admin/dashboard-page"
 import AdminEditProfilePage from "@/page/admin/edit-profile-page"
 import AdminListClassPage from "@/page/admin/list-class-page"
 import AdminListParentPage from "@/page/admin/list-parent-page"
+import AdminListStudentPage from "@/page/admin/list-student-page"
 import AdminListTeacherPage from "@/page/admin/list-teacher-page"
 import AdminProfilePage from "@/page/admin/profile-page"
 import LoginPage from "@/page/auth/login-page"
@@ -26,6 +27,7 @@ export default function AppRouter() {
         <Route path="user/teacher" element={<AdminListTeacherPage />} />
         <Route path="user/parent" element={<AdminListParentPage />} />
         <Route path="class" element={<AdminListClassPage />} />
+        <Route path="student" element={<AdminListStudentPage />} />
         {/*
 
         <Route path="user/teacher" element={<AdminTeacherPage />} />

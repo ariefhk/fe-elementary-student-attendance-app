@@ -13,26 +13,32 @@ import { FaRegTrashAlt } from "react-icons/fa"
 import { MdOutlineVisibility } from "react-icons/md"
 import { Link } from "react-router-dom"
 
-function AdminClassRows({
-  classes,
-  isSuccessGetClasses,
-  isLoadingGetClasses,
-  onEditClass,
-  onDeleteClass,
+function AdminStudentRows({
+  students,
+  isSuccessGetStudents,
+  isLoadingGetStudents,
+  onEditStudent,
+  onDeleteStudent,
 }) {
   let tableContent
 
-  if (!isLoadingGetClasses && isSuccessGetClasses && classes.length > 0) {
-    tableContent = classes.map((c, index) => {
+  if (!isLoadingGetStudents && isSuccessGetStudents && students.length > 0) {
+    tableContent = students.map((c, index) => {
       return (
         <TableRow className="border" key={index + 1}>
           <TableCell className="font-medium">{index + 1}</TableCell>
-          <TableCell>{c?.name || "-"}</TableCell>
-          <TableCell>{c?.teacher?.name || "-"}</TableCell>
-          <TableCell>{c?.studentCount || "-"}</TableCell>
+          <TableCell>{c.nisn || "-"}</TableCell>
+          <TableCell>{c.name || "-"}</TableCell>
+          {/* <TableCell>{c.email || "-"}</TableCell> */}
+          {/* <TableCell>{c.no_telp || "-"}</TableCell> */}
+          <TableCell>
+            {!c?.gender ? "-" : c.gender === "P" ? "Perempuan" : "Laki-Laki"}
+          </TableCell>
+          <TableCell>{c.classCount || "-"}</TableCell>
+          <TableCell>{c?.parent?.name || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
             <Button asChild>
-              <Link to={`/admin/class/${c.id}/detail`}>
+              <Link to={`/admin/student/${c.id}/detail`}>
                 <MdOutlineVisibility className="flex-shrink-0 w-5 h-5" />
               </Link>
             </Button>
@@ -40,7 +46,7 @@ function AdminClassRows({
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                onEditClass(c)
+                onEditStudent(c)
               }}>
               <BsPencil className="flex-shrink-0 w-5 h-5" />
             </Button>
@@ -48,7 +54,7 @@ function AdminClassRows({
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                onDeleteClass(c)
+                onDeleteStudent(c)
               }}
               variant="destructive">
               <FaRegTrashAlt className="flex-shrink-0 w-5 h-5" />
@@ -57,12 +63,15 @@ function AdminClassRows({
         </TableRow>
       )
     })
-  } else if (isLoadingGetClasses) {
+  } else if (isLoadingGetStudents) {
     tableContent = Array.from({ length: 3 }).map((_, index) => {
       return (
         <TableRow key={index + 1}>
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="font-medium">-</TableCell>
+          <TableCell className="font-medium">-</TableCell>
+          {/* <TableCell className="font-medium">-</TableCell>
+          <TableCell className="font-medium">-</TableCell> */}
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="flex gap-x-2">
@@ -76,8 +85,8 @@ function AdminClassRows({
   } else {
     tableContent = (
       <TableRow className="border ">
-        <TableCell colSpan={7} className="text-center">
-          Kelas tidak ditemukan!
+        <TableCell colSpan={10} className="text-center">
+          Siswa tidak ditemukan!
         </TableCell>
       </TableRow>
     )
@@ -86,41 +95,45 @@ function AdminClassRows({
   return tableContent
 }
 
-export default function AdminListClassTable({
-  classes,
-  isSuccessGetClasses,
-  isLoadingGetClasses,
-  onEditClass,
-  onDeleteClass,
+export default function AdminListStudentTable({
+  students,
+  isSuccessGetStudents,
+  isLoadingGetStudents,
+  onEditStudent,
+  onDeleteStudent,
 }) {
   return (
     <Table>
       <TableHeader>
         <TableRow className="bg-color-1   hover:bg-color-1/80">
           <TableHead className="w-[20px] text-white">No</TableHead>
-          <TableHead className="w-[160px] text-white">Nama Kelas</TableHead>
-          <TableHead className="w-[300px] text-white">Guru</TableHead>
-          <TableHead className="w-[120px] text-white">Jumlah Murid</TableHead>
-          <TableHead className="w-[200px] text-white">Aksi</TableHead>
+          <TableHead className="w-[160px] text-white">NISN</TableHead>
+          <TableHead className="w-[300px] text-white">Nama</TableHead>
+          {/* <TableHead className="w-[160px] text-white">Email</TableHead> */}
+          {/* <TableHead className="w-[200px] text-white">No Telp</TableHead> */}
+          <TableHead className="w-[300px] text-white">Jenis Kelamin</TableHead>
+          <TableHead className="w-[300px] text-white">Jumlah Kelas</TableHead>
+          <TableHead className="w-[300px] text-white">Orang Tua</TableHead>
+          <TableHead className="w-[300px] text-white">Aksi</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody className="[&_tr:last-child]:border ">
-        <AdminClassRows
-          classes={classes}
-          isLoadingGetClasses={isLoadingGetClasses}
-          isSuccessGetClasses={isSuccessGetClasses}
-          onDeleteClass={onDeleteClass}
-          onEditClass={onEditClass}
+        <AdminStudentRows
+          students={students}
+          isLoadingGetStudents={isLoadingGetStudents}
+          isSuccessGetStudents={isSuccessGetStudents}
+          onDeleteStudent={onDeleteStudent}
+          onEditStudent={onEditStudent}
         />
       </TableBody>
     </Table>
   )
 }
 
-AdminListClassTable.propTypes = {
-  classes: PropTypes.array,
-  isSuccessGetClasses: PropTypes.bool,
-  isLoadingGetClasses: PropTypes.bool,
-  onEditClass: PropTypes.func,
-  onDeleteClass: PropTypes.func,
+AdminListStudentTable.propTypes = {
+  students: PropTypes.array,
+  isSuccessGetStudents: PropTypes.bool,
+  isLoadingGetStudents: PropTypes.bool,
+  onEditStudent: PropTypes.func,
+  onDeleteStudent: PropTypes.func,
 }
