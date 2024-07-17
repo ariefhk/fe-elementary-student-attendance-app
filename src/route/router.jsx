@@ -3,6 +3,7 @@ import AuthLayout from "@/layout/auth/auth-layout"
 import AdminDashboardPage from "@/page/admin/dashboard-page"
 import AdminEditProfilePage from "@/page/admin/edit-profile-page"
 import AdminListClassPage from "@/page/admin/list-class-page"
+import AdminDetailClassPage from "@/page/admin/list-detail-class-page"
 import AdminListParentPage from "@/page/admin/list-parent-page"
 import AdminListStudentPage from "@/page/admin/list-student-page"
 import AdminListTeacherPage from "@/page/admin/list-teacher-page"
@@ -27,6 +28,10 @@ export default function AppRouter() {
         <Route path="user/teacher" element={<AdminListTeacherPage />} />
         <Route path="user/parent" element={<AdminListParentPage />} />
         <Route path="class" element={<AdminListClassPage />} />
+        <Route
+          path="class/:classId/detail"
+          element={<AdminDetailClassPage />}
+        />
         <Route path="student" element={<AdminListStudentPage />} />
         {/*
 

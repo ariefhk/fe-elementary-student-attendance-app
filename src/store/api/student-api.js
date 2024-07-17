@@ -36,6 +36,82 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
       },
     }),
 
+    findStudentByClassId: builder.query({
+      query: (args) => {
+        return {
+          url: `students/${args?.studentId}/class/${args.classId}?name=${args.name}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const studentClass = response?.data
+        return studentClass
+      },
+      providesTags: (result) => {
+        return result?.students
+          ? [
+              ...result.students.map(({ id }) => ({
+                type: "STUDENT",
+                id: `${id}_BY_CLASS`,
+              })),
+              { type: "STUDENT", id: "LIST_OF_STUDENT_BY_CLASS" },
+            ]
+          : [{ type: "STUDENT", id: "LIST_OF_STUDENT_BY_CLASS" }]
+      },
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL STUDENT BY CLASS: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
+
+    setStudentToClass: builder.mutation({
+      query: (args) => ({
+        url: `students/${args?.studentId}/class/${args.classId}`,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      transformResponse: (response) => {
+        const studentClass = response?.data
+        return studentClass
+      },
+      invalidatesTags: () => [
+        { type: "STUDENT", id: "LIST_OF_STUDENT_BY_CLASS" },
+        { type: "STUDENT", id: "LIST_OF_STUDENT" },
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+      ],
+    }),
+
+    removeStudentFromClass: builder.mutation({
+      query: (args) => ({
+        url: `students/${args?.studentId}/class/${args.classId}`,
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      transformResponse: () => {
+        return true
+      },
+      invalidatesTags: () => [
+        { type: "STUDENT", id: "LIST_OF_STUDENT_BY_CLASS" },
+        { type: "STUDENT", id: "LIST_OF_STUDENT" },
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+      ],
+    }),
+
     createStudent: builder.mutation({
       query: (args) => ({
         url: `students`,
@@ -100,6 +176,9 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
 })
 
 export const {
+  useRemoveStudentFromClassMutation,
+  useFindStudentByClassIdQuery,
+  useSetStudentToClassMutation,
   useCreateStudentMutation,
   useDeleteStudentMutation,
   useFindAllStudentQuery,
