@@ -56,7 +56,6 @@ export const parentApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [{ type: "PARENT", id: "LIST_OF_PARENT" }],
     }),
-
     updateParent: builder.mutation({
       query: (args) => ({
         url: `parents/${args?.parentId}`,

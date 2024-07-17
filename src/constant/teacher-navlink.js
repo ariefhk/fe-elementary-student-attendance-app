@@ -35,25 +35,32 @@ export const teacherNavLink = [
     subLinks: [],
   },
   {
-    id: 6,
+    id: 3,
     name: "Kelas",
     icon: FaChalkboardTeacher,
     href: "/teacher/class",
-    subLinks: [
-      {
-        id: 5,
-        name: "Siswa",
-        icon: FaUserGraduate,
-        href: "/teacher/class/student",
-      },
-      {
-        id: 5,
-        name: "Absensi",
-        icon: RiArchive2Line,
-        href: "/teacher/class/presence",
-      },
-    ],
+    subLinks: [],
   },
+  // {
+  //   id: 6,
+  //   name: "Kelas",
+  //   icon: FaChalkboardTeacher,
+  //   href: "/teacher/class",
+  //   subLinks: [
+  //     {
+  //       id: 5,
+  //       name: "Siswa",
+  //       icon: FaUserGraduate,
+  //       href: "/teacher/class/student",
+  //     },
+  //     {
+  //       id: 5,
+  //       name: "Absensi",
+  //       icon: RiArchive2Line,
+  //       href: "/teacher/class/presence",
+  //     },
+  //   ],
+  // },
 ]
 
 export const sideTeacherNavLink = teacherNavLink.map((dashLink) => {

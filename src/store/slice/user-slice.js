@@ -1,5 +1,9 @@
 import { LOCALSTORAGE } from "@/constant/localstorage-key"
-import { getLocalStorageData, deleteLocalStorageData,saveLocalStorageData } from "@/lib/localstorage"
+import {
+  deleteLocalStorageData,
+  getLocalStorageData,
+  saveLocalStorageData,
+} from "@/lib/localstorage"
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
@@ -7,6 +11,8 @@ const initialState = {
     name: null,
     role: null,
     token: null,
+    teacherId: null,
+    parentId: null,
   },
 }
 

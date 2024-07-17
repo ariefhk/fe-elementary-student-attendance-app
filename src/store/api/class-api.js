@@ -35,7 +35,79 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
-
+    findClassById: builder.query({
+      query: (args) => {
+        return {
+          url: `classes/${args.classId}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const classesDetailWithStudent = response?.data
+        return classesDetailWithStudent
+      },
+      providesTags: (result) => {
+        return result?.students?.length > 0
+          ? [
+              ...result.students.map(({ id }) => ({
+                type: "CLASS",
+                id: `${id}_STUDENT_BY_CLASS`,
+              })),
+              { type: "CLASS", id: "LIST_OF_STUDENT_BY_CLASS" },
+            ]
+          : [{ type: "CLASS", id: "LIST_OF_STUDENT_BY_CLASS" }]
+      },
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log("LOGG ERROR ON QUERYSTARTED GET ALL CLASS: ", error)
+        }
+        dispatch(hideLoading())
+      },
+    }),
+    findClassByTeacherId: builder.query({
+      query: (args) => {
+        return {
+          url: `classes/teacher/${args.teacherId}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const teacherClasses = response?.data
+        return teacherClasses
+      },
+      providesTags: (result) => {
+        return result?.classes
+          ? [
+              ...result.classes.map(({ id }) => ({
+                type: "CLASS",
+                id: `${id}_BY_TEACHER`,
+              })),
+              { type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" },
+            ]
+          : [{ type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" }]
+      },
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL CLASS BY TEACHER: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
     createClass: builder.mutation({
       query: (args) => ({
         url: `classes`,
@@ -96,6 +168,8 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
 })
 
 export const {
+  useFindClassByIdQuery,
+  useFindClassByTeacherIdQuery,
   useFindAllClassQuery,
   useCreateClassMutation,
   useUpdateClassMutation,

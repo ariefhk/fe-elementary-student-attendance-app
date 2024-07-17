@@ -5,10 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useDialog from "@/hook/useDialog"
 import useInput from "@/hook/useInput"
-import {
-  useFindStudentByClassIdQuery,
-  useRemoveStudentFromClassMutation,
-} from "@/store/api/student-api"
+import { useFindStudentByClassIdQuery } from "@/store/api/student-api"
 import { useState } from "react"
 import { useParams } from "react-router-dom"
 
@@ -98,41 +95,6 @@ export default function AdminDetailClassPage() {
           student={choosedStudent}
           classId={classId}
         />
-        {/* <AdminStudentListByClassTable
-          students={students?.students}
-          isLoadingGetStudents={isLoadingGetStudents}
-          isSuccessGetStudents={isSuccessGetStudents}
-          onDeleteStudent={onDeleteClass}
-        />
-        <AdminAddStudentToClassDialog
-          onClose={() => setChoosedClass(null)}
-          classes={students?.class}
-          open={isOpenAddStudentToClassDialog}
-          onOpenChange={setIsOpenAddStudentToClassDialog}
-        />
-
-        <AdminDeleteStudentToClassDialog
-          onClose={() => setChoosedClass(null)}
-          classes={choosedClass}
-          open={isOpenDeleteClassDialog}
-          onOpenChange={setIsOpenDeleteClassDialog}
-        /> */}
-        {/* <AdminEditClassDialog
-          onOpenChange={setIsOpenEditClassDialog}
-          onClose={() => setChoosedClass(null)}
-          classes={choosedClass}
-          open={isOpenEditClassDialog}
-        />
-        <AdminDeleteClassDialog
-          classes={choosedClass}
-          onClose={() => setChoosedClass(null)}
-          open={isOpenDeleteClassDialog}
-          onOpenChange={setIsOpenDeleteClassDialog}
-        />
-        <AdminAddClassDialog
-          open={isOpenAddClassDialog}
-          onOpenChange={setIsOpenAddClassDialog}
-        /> */}
       </div>
     </>
   )
