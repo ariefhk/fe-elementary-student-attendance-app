@@ -12,6 +12,7 @@ import AdminProfilePage from "@/page/admin/profile-page"
 import LoginPage from "@/page/auth/login-page"
 import GuestNotFoundPage from "@/page/not-found/not-found-page"
 import TeacherClassPresencePage from "@/page/teacher/class-presence-page"
+import TeacherCreatePresencePage from "@/page/teacher/create-presence-page"
 import TeacherDashboardPage from "@/page/teacher/dashboard-page"
 import TeacherDetailClassPage from "@/page/teacher/detail-class-page"
 import TeacherListClassPage from "@/page/teacher/list-class-page"
@@ -57,6 +58,10 @@ export default function AppRouter() {
         <Route
           path="class/:classId/presence"
           element={<TeacherClassPresencePage />}
+        />
+        <Route
+          path="class/:classId/presence/create"
+          element={<TeacherCreatePresencePage />}
         />
 
         {/*

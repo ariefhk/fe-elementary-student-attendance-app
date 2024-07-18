@@ -1,6 +1,6 @@
 import { DAY_STR, MONTH_STR } from "@/constant/date"
 
-export const formattedDate = (dates) => {
+export const formattedDate = (dates, isNeedYear = false) => {
   const date = new Date(dates)
 
   // Get the day and month strings
@@ -10,7 +10,9 @@ export const formattedDate = (dates) => {
   const month = MONTH_STR[date.getMonth()]
 
   // Return the formatted date string
-  return `${day}, ${date.getDate()} ${month}`
+  return isNeedYear
+    ? `${day}, ${date.getDate()} ${month} ${date.getFullYear()}`
+    : `${day}, ${date.getDate()} ${month}`
 }
 
 export const formattedDateStr = (dateStr) => {

@@ -34,7 +34,7 @@ import { useGetWeeklyAttendanceQuery } from "@/store/api/attendance-api"
 import { getUser } from "@/store/slice/user-slice"
 import { useMemo, useState } from "react"
 import { useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 
 const initialStudentSearchInput = {
   name: "",
@@ -121,10 +121,10 @@ export default function TeacherClassPresencePage() {
                 onClick={() => {}}>
                 Cetak Data
               </Button>
-              <Button
-                disabled={isLoadingGetWeeklyAttendance}
-                onClick={() => {}}>
-                Input Absensi
+              <Button asChild>
+                <Link to={`/teacher/class/${classId}/presence/create`}>
+                  Input Absensi
+                </Link>
               </Button>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
