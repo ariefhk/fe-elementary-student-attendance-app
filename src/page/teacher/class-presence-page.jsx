@@ -85,15 +85,6 @@ export default function TeacherClassPresencePage() {
     week: choosedWeek,
   })
 
-  // console.log({
-  //   weeklyAttendance,
-  // })
-
-  console.log({
-    choosedRangeOfWeek,
-    allWeekOfTheMonth,
-  })
-
   return (
     <>
       <div className=" flex justify-between">

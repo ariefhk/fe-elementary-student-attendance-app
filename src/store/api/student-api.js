@@ -36,6 +36,32 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
       },
     }),
 
+    findStudentById: builder.query({
+      query: (args) => {
+        return {
+          url: `students/${args?.studentId}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const student = response?.data
+        return student
+      },
+      providesTags: () => [{ type: "STUDENT", id: "STUDENT_BY_ID" }],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log("LOGG ERROR ON QUERYSTARTED GET STUDENT BY ID: ", error)
+        }
+        dispatch(hideLoading())
+      },
+    }),
+
     findStudentByClassId: builder.query({
       query: (args) => {
         return {
@@ -61,6 +87,37 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
             ]
           : [{ type: "STUDENT", id: "LIST_OF_STUDENT_BY_CLASS" }]
       },
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL STUDENT BY CLASS: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
+
+    findStudentByParentId: builder.query({
+      query: (args) => {
+        return {
+          url: `students/parent/${args?.parentId}?name=${args.name}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const studentByParent = response?.data
+        return studentByParent
+      },
+      providesTags: () => [
+        { type: "STUDENT", id: "LIST_OF_STUDENT_BY_PARENT" },
+      ],
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         dispatch(showLoading())
         try {
@@ -176,6 +233,8 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
 })
 
 export const {
+  useFindStudentByIdQuery,
+  useFindStudentByParentIdQuery,
   useRemoveStudentFromClassMutation,
   useFindStudentByClassIdQuery,
   useSetStudentToClassMutation,

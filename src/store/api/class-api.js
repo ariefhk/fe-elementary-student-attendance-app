@@ -108,6 +108,34 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+    findClassByStudentId: builder.query({
+      query: (args) => {
+        return {
+          url: `classes/student/${args.studentId}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const studentClasses = response?.data
+        return studentClasses
+      },
+      providesTags: () => [{ type: "CLASS", id: "LIST_OF_CLASS_BY_STUDENT" }],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log(
+            "LOGG ERROR ON QUERYSTARTED GET ALL CLASS BY STUDENT: ",
+            error,
+          )
+        }
+        dispatch(hideLoading())
+      },
+    }),
     createClass: builder.mutation({
       query: (args) => ({
         url: `classes`,
@@ -168,6 +196,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
 })
 
 export const {
+  useFindClassByStudentIdQuery,
   useFindClassByIdQuery,
   useFindClassByTeacherIdQuery,
   useFindAllClassQuery,
