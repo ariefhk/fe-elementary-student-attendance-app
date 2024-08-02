@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button"
+import { IconButton } from "@/components/common/icon-button"
 import {
   Table,
   TableBody,
@@ -10,8 +10,7 @@ import {
 import PropTypes from "prop-types"
 import { BsPencil } from "react-icons/bs"
 import { FaRegTrashAlt } from "react-icons/fa"
-import { MdOutlineVisibility } from "react-icons/md"
-import { Link } from "react-router-dom"
+import { FaEye } from "react-icons/fa6"
 
 function AdminClassRows({
   classes,
@@ -31,28 +30,36 @@ function AdminClassRows({
           <TableCell>{c?.teacher?.name || "-"}</TableCell>
           <TableCell>{c?.studentCount || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
-            <Button asChild>
-              <Link to={`/admin/class/${c.id}/detail`}>
-                <MdOutlineVisibility className="flex-shrink-0 w-5 h-5" />
-              </Link>
-            </Button>
-            <Button
+            <IconButton
+              className="h-11 px-5 w-11 bg-color-1 hover:bg-white"
+              iconClassName="text-white group-hover:text-color-1 w-5 h-5"
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
                 onEditClass(c)
-              }}>
-              <BsPencil className="flex-shrink-0 w-5 h-5" />
-            </Button>
-            <Button
+              }}
+              Icon={FaEye}
+            />
+            <IconButton
+              className="h-11 px-5 w-11 bg-color-5 hover:bg-white"
+              iconClassName="text-white group-hover:text-color-5 w-5 h-5"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onEditClass(c)
+              }}
+              Icon={BsPencil}
+            />
+            <IconButton
+              className="h-11 px-5 w-11 bg-color-4 hover:bg-white"
+              iconClassName="text-white group-hover:text-color-4 w-5 h-5"
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
                 onDeleteClass(c)
               }}
-              variant="destructive">
-              <FaRegTrashAlt className="flex-shrink-0 w-5 h-5" />
-            </Button>
+              Icon={FaRegTrashAlt}
+            />
           </TableCell>
         </TableRow>
       )

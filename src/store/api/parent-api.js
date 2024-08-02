@@ -6,7 +6,7 @@ export const parentApi = protectedApiEndpoint.injectEndpoints({
     findAllParent: builder.query({
       query: (args) => {
         return {
-          url: `parents?name=${args?.name}`,
+          url: `parent?name=${args?.name}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -37,7 +37,7 @@ export const parentApi = protectedApiEndpoint.injectEndpoints({
     }),
     createParent: builder.mutation({
       query: (args) => ({
-        url: `parents`,
+        url: `parent`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -58,7 +58,7 @@ export const parentApi = protectedApiEndpoint.injectEndpoints({
     }),
     updateParent: builder.mutation({
       query: (args) => ({
-        url: `parents/${args?.parentId}`,
+        url: `parent/${args?.parentId}`,
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -80,7 +80,7 @@ export const parentApi = protectedApiEndpoint.injectEndpoints({
 
     deleteParent: builder.mutation({
       query: (args) => ({
-        url: `parents/${args?.parentId}`,
+        url: `parent/${args?.parentId}`,
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

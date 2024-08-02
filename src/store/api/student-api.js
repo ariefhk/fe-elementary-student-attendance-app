@@ -6,7 +6,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
     findAllStudent: builder.query({
       query: (args) => {
         return {
-          url: `students?name=${args.name}`,
+          url: `student?name=${args.name}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -39,7 +39,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
     findStudentById: builder.query({
       query: (args) => {
         return {
-          url: `students/${args?.studentId}`,
+          url: `student/${args?.studentId}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -65,7 +65,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
     findStudentByClassId: builder.query({
       query: (args) => {
         return {
-          url: `students/${args?.studentId}/class/${args.classId}?name=${args.name}`,
+          url: `student/${args?.studentId}/class/${args.classId}?name=${args.name}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -104,7 +104,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
     findStudentByParentId: builder.query({
       query: (args) => {
         return {
-          url: `students/parent/${args?.parentId}?name=${args.name}`,
+          url: `student/parent/${args?.parentId}?name=${args.name}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -134,7 +134,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
 
     setStudentToClass: builder.mutation({
       query: (args) => ({
-        url: `students/${args?.studentId}/class/${args.classId}`,
+        url: `student/${args?.studentId}/class/${args.classId}`,
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -153,7 +153,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
 
     removeStudentFromClass: builder.mutation({
       query: (args) => ({
-        url: `students/${args?.studentId}/class/${args.classId}`,
+        url: `student/${args?.studentId}/class/${args.classId}`,
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -171,7 +171,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
 
     createStudent: builder.mutation({
       query: (args) => ({
-        url: `students`,
+        url: `student`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -194,7 +194,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
 
     updateStudent: builder.mutation({
       query: (args) => ({
-        url: `students/${args?.studentId}`,
+        url: `student/${args?.studentId}`,
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -218,7 +218,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
 
     deleteStudent: builder.mutation({
       query: (args) => ({
-        url: `students/${args?.studentId}`,
+        url: `student/${args?.studentId}`,
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

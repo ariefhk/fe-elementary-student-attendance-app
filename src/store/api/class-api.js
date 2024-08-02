@@ -6,7 +6,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
     findAllClass: builder.query({
       query: (args) => {
         return {
-          url: `classes?name=${args.name}`,
+          url: `class?name=${args.name}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
     findClassById: builder.query({
       query: (args) => {
         return {
-          url: `classes/${args.classId}`,
+          url: `class/${args.classId}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -73,7 +73,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
     findClassByTeacherId: builder.query({
       query: (args) => {
         return {
-          url: `classes/teacher/${args.teacherId}`,
+          url: `class/teacher/${args.teacherId}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -111,7 +111,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
     findClassByStudentId: builder.query({
       query: (args) => {
         return {
-          url: `classes/student/${args.studentId}`,
+          url: `class/student/${args.studentId}`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -138,7 +138,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
     }),
     createClass: builder.mutation({
       query: (args) => ({
-        url: `classes`,
+        url: `class`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,7 +157,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
 
     updateClass: builder.mutation({
       query: (args) => ({
-        url: `classes/${args?.classId}`,
+        url: `class/${args?.classId}`,
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -178,7 +178,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
     }),
     deleteClass: builder.mutation({
       query: (args) => ({
-        url: `classes/${args?.classId}`,
+        url: `class/${args?.classId}`,
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

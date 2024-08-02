@@ -1,3 +1,4 @@
+import { IconButton } from "@/components/common/icon-button"
 import AdminAddClassDialog from "@/components/dialog/admin/add-class-dialog"
 import AdminDeleteClassDialog from "@/components/dialog/admin/delete-class-dialog"
 import AdminEditClassDialog from "@/components/dialog/admin/edit-class-dialog"
@@ -8,6 +9,7 @@ import useDialog from "@/hook/useDialog"
 import useInput from "@/hook/useInput"
 import { useFindAllClassQuery } from "@/store/api/class-api"
 import { useState } from "react"
+import { IoMdAdd } from "react-icons/io"
 
 const initialClassSearchInput = {
   name: "",
@@ -54,15 +56,20 @@ export default function AdminListClassPage() {
   return (
     <>
       <div className=" flex justify-between">
-        <h1 className="text-fs24_36 font-semibold text-color-1">Data Kelas</h1>
+        <h1 className="text-fs30_40 font-semibold text-color-1">Data Kelas</h1>
       </div>
-      <div className="flex flex-col gap-y-3 ">
+      <div className="flex flex-col gap-y-8 ">
         <div className="flex justify-between items-center">
-          <Button onClick={() => onOpenAddClassDialog(true)}>
-            Tambah Kelas
-          </Button>
+          <IconButton
+            name="Tambah Kelas"
+            className="bg-color-1 font-medium w-[170px] h-[45px] text-white hover:bg-white hover:text-color-1"
+            iconClassName="text-white group-hover:text-color-1"
+            onClick={() => onOpenAddClassDialog(true)}
+            Icon={IoMdAdd}
+          />
           <div className="max-w-[224px] ">
             <Input
+              className="h-[45px]"
               placeholder="Cari Orang Tua..."
               name="name"
               onChange={onChangeClass}

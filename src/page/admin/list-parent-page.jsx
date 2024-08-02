@@ -1,3 +1,4 @@
+import { IconButton } from "@/components/common/icon-button"
 import AdminAddParentDialog from "@/components/dialog/admin/add-parent-dialog"
 import AdminDeleteParentDialog from "@/components/dialog/admin/delete-parent-dialog"
 import AdminEditParentDialog from "@/components/dialog/admin/edit-parent-dialog"
@@ -8,6 +9,7 @@ import useDialog from "@/hook/useDialog"
 import useInput from "@/hook/useInput"
 import { useFindAllParentQuery } from "@/store/api/parent-api"
 import { useState } from "react"
+import { IoMdAdd } from "react-icons/io"
 
 const initialParentSearch = {
   name: "",
@@ -54,17 +56,22 @@ export default function AdminListParentPage() {
   return (
     <>
       <div className=" flex justify-between">
-        <h1 className="text-fs24_36 font-semibold text-color-1">
+        <h1 className="text-fs30_40 font-semibold text-color-1">
           Data Orang Tua
         </h1>
       </div>
-      <div className="flex flex-col gap-y-3 ">
+      <div className="flex flex-col gap-y-8 ">
         <div className="flex justify-between items-center">
-          <Button onClick={() => onOpenAddParentDialog(true)}>
-            Tambah Orang Tua
-          </Button>
+          <IconButton
+            name="Tambah Orang Tua"
+            className="bg-color-1 font-medium w-[200px] h-[45px] text-white hover:bg-white hover:text-color-1"
+            iconClassName="text-white group-hover:text-color-1"
+            onClick={() => onOpenAddParentDialog(true)}
+            Icon={IoMdAdd}
+          />
           <div className="max-w-[224px] ">
             <Input
+              className="h-[45px]"
               placeholder="Cari Orang Tua..."
               name="name"
               onChange={onChangeSearchParent}

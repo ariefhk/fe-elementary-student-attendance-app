@@ -7,7 +7,7 @@ export const teacherApi = protectedApiEndpoint.injectEndpoints({
       query: (args) => {
         if (args?.name) {
           return {
-            url: `teachers?name=${args.name}`,
+            url: `teacher?name=${args.name}`,
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -15,7 +15,7 @@ export const teacherApi = protectedApiEndpoint.injectEndpoints({
           }
         }
         return {
-          url: `teachers`,
+          url: `teacher`,
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -47,7 +47,7 @@ export const teacherApi = protectedApiEndpoint.injectEndpoints({
 
     createTeacher: builder.mutation({
       query: (args) => ({
-        url: `teachers`,
+        url: `teacher`,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const teacherApi = protectedApiEndpoint.injectEndpoints({
     }),
     updateTeacher: builder.mutation({
       query: (args) => ({
-        url: `teachers/${args?.teacherId}`,
+        url: `teacher/${args?.teacherId}`,
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -92,7 +92,7 @@ export const teacherApi = protectedApiEndpoint.injectEndpoints({
 
     deleteTeacher: builder.mutation({
       query: (args) => ({
-        url: `teachers/${args?.teacherId}`,
+        url: `teacher/${args?.teacherId}`,
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
