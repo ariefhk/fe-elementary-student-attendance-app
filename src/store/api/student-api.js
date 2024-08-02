@@ -19,10 +19,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
       },
       providesTags: (result) => {
         return result
-          ? [
-              ...result.map(({ id }) => ({ type: "STUDENT", id })),
-              { type: "STUDENT", id: "LIST_OF_STUDENT" },
-            ]
+          ? [...result.map(({ id }) => ({ type: "STUDENT", id })), { type: "STUDENT", id: "LIST_OF_STUDENT" }]
           : [{ type: "STUDENT", id: "LIST_OF_STUDENT" }]
       },
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
@@ -62,6 +59,32 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
       },
     }),
 
+    findStudentInsideClass: builder.query({
+      query: (args) => {
+        return {
+          url: `student/class/${args.classId}`,
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      },
+      transformResponse: (response) => {
+        const studentClass = response?.data
+        return studentClass
+      },
+      providesTags: () => [{ type: "STUDENT", id: "LIST_OF_STUDENT_INSIDE_CLASS" }],
+      async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+        dispatch(showLoading())
+        try {
+          await queryFulfilled
+        } catch (error) {
+          console.log("LOGG ERROR ON QUERYSTARTED GET ALL STUDENT INSIDE CLASS: ", error)
+        }
+        dispatch(hideLoading())
+      },
+    }),
+
     findStudentByClassId: builder.query({
       query: (args) => {
         return {
@@ -92,10 +115,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.log(
-            "LOGG ERROR ON QUERYSTARTED GET ALL STUDENT BY CLASS: ",
-            error,
-          )
+          console.log("LOGG ERROR ON QUERYSTARTED GET ALL STUDENT BY CLASS: ", error)
         }
         dispatch(hideLoading())
       },
@@ -115,18 +135,13 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
         const studentByParent = response?.data
         return studentByParent
       },
-      providesTags: () => [
-        { type: "STUDENT", id: "LIST_OF_STUDENT_BY_PARENT" },
-      ],
+      providesTags: () => [{ type: "STUDENT", id: "LIST_OF_STUDENT_BY_PARENT" }],
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         dispatch(showLoading())
         try {
           await queryFulfilled
         } catch (error) {
-          console.log(
-            "LOGG ERROR ON QUERYSTARTED GET ALL STUDENT BY CLASS: ",
-            error,
-          )
+          console.log("LOGG ERROR ON QUERYSTARTED GET ALL STUDENT BY CLASS: ", error)
         }
         dispatch(hideLoading())
       },
@@ -233,6 +248,7 @@ export const studentApi = protectedApiEndpoint.injectEndpoints({
 })
 
 export const {
+  useFindStudentInsideClassQuery,
   useFindStudentByIdQuery,
   useFindStudentByParentIdQuery,
   useRemoveStudentFromClassMutation,

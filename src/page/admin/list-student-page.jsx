@@ -1,6 +1,7 @@
 import { IconButton } from "@/components/common/icon-button"
 import AdminAddStudentDialog from "@/components/dialog/admin/add-student-dialog"
 import AdminDeleteStudentDialog from "@/components/dialog/admin/delete-student-dialog"
+import AdminDetailStudentDialog from "@/components/dialog/admin/detail-student-dialog"
 import AdminEditStudentDialog from "@/components/dialog/admin/edit-student-dialog"
 import AdminListStudentTable from "@/components/table/admin/list-student"
 import { Input } from "@/components/ui/input"
@@ -17,6 +18,8 @@ const initialStudentSearch = {
 export default function AdminListStudentPage() {
   const [choosedStudent, setChoosedStudent] = useState(null)
   const { values: searchStudentValue, onChange: onChangeSearchStudent } = useInput(initialStudentSearch)
+
+  const { isOpenDialog: isOpenDetailStudentDialog, onOpenDialog: onOpenDetailStudentDialog } = useDialog()
 
   const { isOpenDialog: isOpenAddStudentDialog, onOpenDialog: onOpenAddStudentDialog } = useDialog()
 
@@ -40,6 +43,10 @@ export default function AdminListStudentPage() {
   const onHandleDeleteStudent = (teacher) => {
     setChoosedStudent(teacher)
     onOpenDeleteStudentDialog(true)
+  }
+  const onHandleDetailStudent = (teacher) => {
+    setChoosedStudent(teacher)
+    onOpenDetailStudentDialog(true)
   }
 
   return (
@@ -67,6 +74,7 @@ export default function AdminListStudentPage() {
           </div>
         </div>
         <AdminListStudentTable
+          onDetailStudent={onHandleDetailStudent}
           onDeleteStudent={onHandleDeleteStudent}
           onEditStudent={onHandleEditStudent}
           isLoadingGetStudents={isLoadingGetStudents}
@@ -89,6 +97,12 @@ export default function AdminListStudentPage() {
         onClose={() => setChoosedStudent(null)}
         onOpenChange={onOpenDeleteStudentDialog}
         open={isOpenDeleteStudentDialog}
+        student={choosedStudent}
+      />
+      <AdminDetailStudentDialog
+        onClose={() => setChoosedStudent(null)}
+        onOpenChange={onOpenDetailStudentDialog}
+        open={isOpenDetailStudentDialog}
         student={choosedStudent}
       />
     </>

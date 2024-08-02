@@ -16,24 +16,11 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
-import {
-  useFindAllStudentQuery,
-  useSetStudentToClassMutation,
-} from "@/store/api/student-api"
+import { useFindAllStudentQuery, useSetStudentToClassMutation } from "@/store/api/student-api"
 import { Check, ChevronsUpDown } from "lucide-react"
 import PropTypes from "prop-types"
 import { useState } from "react"
@@ -41,14 +28,8 @@ import { useForm } from "react-hook-form"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminAddStudentToClassDialog({
-  open = false,
-  onOpenChange,
-  onClose,
-  classes,
-}) {
-  const [setStudentToClass, { isLoading: isLoadingSetStudentToClass }] =
-    useSetStudentToClassMutation()
+export default function AdminAddStudentToClassDialog({ open = false, onOpenChange, onClose, classes }) {
+  const [setStudentToClass, { isLoading: isLoadingSetStudentToClass }] = useSetStudentToClassMutation()
   const [openStudentList, setOpenStudentList] = useState(false)
 
   const {
@@ -97,16 +78,13 @@ export default function AdminAddStudentToClassDialog({
   }
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
+      <AlertDialogContent className="px-0 max-w-[500px] font-poppins">
         <AlertDialogDescription className="sr-only">
           This action is for adding student.
         </AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
-              Input Data Siswa Kedalam{" "}
-              {classes?.name ? `Kelas ${classes?.name}` : "Kelas"}
-            </span>
+            <span className="text-fs24_36 font-semibold  text-color-1"> Input Data Siswa Ke Kelas</span>
             <Separator />
           </AlertDialogTitle>
           <Form {...form}>
@@ -119,10 +97,8 @@ export default function AdminAddStudentToClassDialog({
                 name="studentId"
                 render={({ field }) => (
                   <FormItem className="space-y-1">
-                    <FormLabel className=" font-light">Siswa</FormLabel>
-                    <Popover
-                      open={openStudentList}
-                      onOpenChange={setOpenStudentList}>
+                    <FormLabel>Siswa</FormLabel>
+                    <Popover open={openStudentList} onOpenChange={setOpenStudentList}>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
@@ -132,8 +108,7 @@ export default function AdminAddStudentToClassDialog({
                           {isLoadingGetStudents && "Sedang Memuat Siswa..."}
                           {!isLoadingGetStudents &&
                             (isSuccessGetStudents && field?.value
-                              ? students.find((sm) => sm.id === field?.value)
-                                  ?.name
+                              ? students.find((sm) => sm.id === field?.value)?.name
                               : "Pilih Siswa...")}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -161,9 +136,7 @@ export default function AdminAddStudentToClassDialog({
                                       <Check
                                         className={cn(
                                           "mr-2 h-4 w-4",
-                                          field?.value === t.id
-                                            ? "opacity-100"
-                                            : "opacity-0",
+                                          field?.value === t.id ? "opacity-100" : "opacity-0",
                                         )}
                                       />
                                       {t.name}
@@ -199,9 +172,7 @@ export default function AdminAddStudentToClassDialog({
             form="add-student-to-class-form"
             type="submit"
             className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
-            {isLoadingSetStudentToClass && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}{" "}
+            {isLoadingSetStudentToClass && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />}{" "}
             Simpan
           </Button>
         </AlertDialogFooter>

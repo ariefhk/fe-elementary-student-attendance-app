@@ -1,18 +1,12 @@
 import { IconButton } from "@/components/common/icon-button"
+import { IconButtonLink } from "@/components/common/icon-button-link"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import PropTypes from "prop-types"
 import { BsPencil } from "react-icons/bs"
 import { FaRegTrashAlt } from "react-icons/fa"
-import { FaEye } from "react-icons/fa6"
+import { IoPersonAddSharp } from "react-icons/io5"
 
-function AdminClassRows({
-  classes,
-  isSuccessGetClasses,
-  isLoadingGetClasses,
-  onDetailClass,
-  onEditClass,
-  onDeleteClass,
-}) {
+function AdminClassRows({ classes, isSuccessGetClasses, isLoadingGetClasses, onEditClass, onDeleteClass }) {
   let tableContent
 
   if (!isLoadingGetClasses && isSuccessGetClasses && classes.length > 0) {
@@ -24,15 +18,11 @@ function AdminClassRows({
           <TableCell>{c?.teacher?.name || "-"}</TableCell>
           <TableCell>{c?.studentCount || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
-            <IconButton
+            <IconButtonLink
+              to={`/admin/class/${c.id}/detail`}
               className="h-11 px-5 w-11 bg-color-1 hover:bg-white"
               iconClassName="text-white group-hover:text-color-1 w-5 h-5"
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                onDetailClass(c)
-              }}
-              Icon={FaEye}
+              Icon={IoPersonAddSharp}
             />
             <IconButton
               className="h-11 px-5 w-11 bg-color-5 hover:bg-white"
@@ -91,7 +81,6 @@ export default function AdminListClassTable({
   classes,
   isSuccessGetClasses,
   isLoadingGetClasses,
-  onDetailClass,
   onEditClass,
   onDeleteClass,
 }) {
@@ -111,7 +100,6 @@ export default function AdminListClassTable({
           classes={classes}
           isLoadingGetClasses={isLoadingGetClasses}
           isSuccessGetClasses={isSuccessGetClasses}
-          onDetailClass={onDetailClass}
           onEditClass={onEditClass}
           onDeleteClass={onDeleteClass}
         />
@@ -124,7 +112,6 @@ AdminListClassTable.propTypes = {
   classes: PropTypes.array,
   isSuccessGetClasses: PropTypes.bool,
   isLoadingGetClasses: PropTypes.bool,
-  onDetailClass: PropTypes.func,
   onEditClass: PropTypes.func,
   onDeleteClass: PropTypes.func,
 }

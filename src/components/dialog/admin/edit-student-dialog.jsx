@@ -16,27 +16,10 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { GENDER } from "@/constant/gender"
 import { cn } from "@/lib/utils"
@@ -49,14 +32,8 @@ import { useForm } from "react-hook-form"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminEditStudentDialog({
-  open = false,
-  onOpenChange,
-  students,
-  onClose,
-}) {
-  const [updateStudent, { isLoading: isLoadingUpdateStudent }] =
-    useUpdateStudentMutation()
+export default function AdminEditStudentDialog({ open = false, onOpenChange, students, onClose }) {
+  const [updateStudent, { isLoading: isLoadingUpdateStudent }] = useUpdateStudentMutation()
   const [openParentList, setOpenParentList] = useState(false)
 
   const {
@@ -125,14 +102,10 @@ export default function AdminEditStudentDialog({
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
-        <AlertDialogDescription className="sr-only">
-          This action is for edit students.
-        </AlertDialogDescription>
+        <AlertDialogDescription className="sr-only">This action is for edit students.</AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
-              Edit Data Siswa
-            </span>
+            <span className="text-fs24_36 font-semibold  text-color-1">Edit Data Siswa</span>
             <Separator />
           </AlertDialogTitle>
           <Form {...form}>
@@ -172,9 +145,7 @@ export default function AdminEditStudentDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Jenis Kelamin</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Pilih Jenis Kelamin!" />
@@ -199,10 +170,8 @@ export default function AdminEditStudentDialog({
                 name="parentId"
                 render={({ field }) => (
                   <FormItem className="space-y-1">
-                    <FormLabel className=" font-light">Orang Tua</FormLabel>
-                    <Popover
-                      open={openParentList}
-                      onOpenChange={setOpenParentList}>
+                    <FormLabel>Orang Tua</FormLabel>
+                    <Popover open={openParentList} onOpenChange={setOpenParentList}>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
@@ -212,8 +181,7 @@ export default function AdminEditStudentDialog({
                           {isLoadingGetParents && "Sedang Memuat Orang Tua..."}
                           {!isLoadingGetParents &&
                             (isSuccessGetParents && field?.value
-                              ? parents.find((sm) => sm.id === field?.value)
-                                  ?.name
+                              ? parents.find((sm) => sm.id === field?.value)?.name
                               : "Pilih Orang Tua...")}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -221,13 +189,10 @@ export default function AdminEditStudentDialog({
                       <PopoverContent className="w-[--radix-popover-trigger-width] max-h-[--radix-popover-content-available-height] p-0">
                         <Command>
                           <CommandInput placeholder="Cari Orang Tua..." />
-                          <CommandEmpty>
-                            Orang Tua tidak ditemukan.
-                          </CommandEmpty>
+                          <CommandEmpty>Orang Tua tidak ditemukan.</CommandEmpty>
                           <CommandList>
                             <CommandGroup>
-                              {isLoadingGetParents &&
-                                "Sedang Memuat Orang Tua..."}
+                              {isLoadingGetParents && "Sedang Memuat Orang Tua..."}
                               {isSuccessGetParents &&
                                 !isLoadingGetParents &&
                                 parents.map((t, index) => {
@@ -244,9 +209,7 @@ export default function AdminEditStudentDialog({
                                       <Check
                                         className={cn(
                                           "mr-2 h-4 w-4",
-                                          field?.value === t.id
-                                            ? "opacity-100"
-                                            : "opacity-0",
+                                          field?.value === t.id ? "opacity-100" : "opacity-0",
                                         )}
                                       />
                                       {t.name}
@@ -282,9 +245,7 @@ export default function AdminEditStudentDialog({
             form="edit-students-form"
             type="submit"
             className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
-            {isLoadingUpdateStudent && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}
+            {isLoadingUpdateStudent && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />}
             Ubah
           </Button>
         </AlertDialogFooter>

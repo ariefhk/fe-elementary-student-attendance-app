@@ -8,22 +8,9 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input, PasswordInput } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { GENDER } from "@/constant/gender"
@@ -35,14 +22,8 @@ import { useForm } from "react-hook-form"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminEditTeacherDialog({
-  open = false,
-  onOpenChange,
-  teacher,
-  onClose,
-}) {
-  const [updateTeacher, { isLoading: isLoadingUpdateTeacher }] =
-    useUpdateTeacherMutation()
+export default function AdminEditTeacherDialog({ open = false, onOpenChange, teacher, onClose }) {
+  const [updateTeacher, { isLoading: isLoadingUpdateTeacher }] = useUpdateTeacherMutation()
 
   const {
     previewImage: previewProfilePicture,
@@ -121,14 +102,10 @@ export default function AdminEditTeacherDialog({
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
-        <AlertDialogDescription className="sr-only">
-          This action is for edit teacher.
-        </AlertDialogDescription>
+        <AlertDialogDescription className="sr-only">This action is for edit teacher.</AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-fs24_36 font-semibold  text-color-1">
-              Edit Data Guru
-            </span>
+            <span className="text-fs24_36 font-semibold  text-color-1">Edit Data Guru</span>
             <Separator />
           </AlertDialogTitle>
           <Form {...form}>
@@ -176,11 +153,7 @@ export default function AdminEditTeacherDialog({
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Masukan email guru"
-                        {...field}
-                      />
+                      <Input type="email" placeholder="Masukan email guru" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -193,10 +166,7 @@ export default function AdminEditTeacherDialog({
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordInput
-                        placeholder="Masukan password terbaru jika ingin merubah"
-                        {...field}
-                      />
+                      <PasswordInput placeholder="Masukan password terbaru jika ingin merubah" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -234,9 +204,7 @@ export default function AdminEditTeacherDialog({
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Jenis Kelamin</FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      defaultValue={field.value}>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
                           <SelectValue placeholder="Pilih Jenis Kelamin" />
@@ -291,10 +259,8 @@ export default function AdminEditTeacherDialog({
             form="edit-teacher-form"
             type="submit"
             className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
-            {isLoadingUpdateTeacher && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}
-            Edit
+            {isLoadingUpdateTeacher && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />}
+            Ubah
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>
