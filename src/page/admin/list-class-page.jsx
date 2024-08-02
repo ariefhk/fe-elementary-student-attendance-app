@@ -1,6 +1,7 @@
 import { IconButton } from "@/components/common/icon-button"
 import AdminAddClassDialog from "@/components/dialog/admin/add-class-dialog"
 import AdminDeleteClassDialog from "@/components/dialog/admin/delete-class-dialog"
+import AdminDetailClassDialog from "@/components/dialog/admin/detail-class-dialog"
 import AdminEditClassDialog from "@/components/dialog/admin/edit-class-dialog"
 import AdminListClassTable from "@/components/table/admin/list-class"
 import { Input } from "@/components/ui/input"
@@ -19,6 +20,8 @@ export default function AdminListClassPage() {
   const { values: searchClassValue, onChange: onChangeClass } = useInput(initialClassSearchInput)
 
   const { isOpenDialog: isOpenAddClassDialog, onOpenDialog: onOpenAddClassDialog } = useDialog()
+
+  const { isOpenDialog: isOpenDetailClassDialog, onOpenDialog: onOpenDetailClassDialog } = useDialog()
 
   const { isOpenDialog: isOpenEditClassDialog, onOpenDialog: onOpenEditClassDialog } = useDialog()
 
@@ -40,6 +43,10 @@ export default function AdminListClassPage() {
     setChoosedClass(classes)
     onOpenDeleteClassDialog(true)
   }
+  const onHandleDetailClass = (classes) => {
+    setChoosedClass(classes)
+    onOpenDetailClassDialog(true)
+  }
 
   return (
     <>
@@ -58,7 +65,7 @@ export default function AdminListClassPage() {
           <div className="max-w-[224px] ">
             <Input
               className="h-[45px]"
-              placeholder="Cari Orang Tua..."
+              placeholder="Cari Kelas..."
               name="name"
               onChange={onChangeClass}
               value={searchClassValue.name}
@@ -71,6 +78,7 @@ export default function AdminListClassPage() {
           isSuccessGetClasses={isSuccessGetClasses}
           onEditClass={onHandleEditClass}
           onDeleteClass={onHandleDeleteClass}
+          onDetailClass={onHandleDetailClass}
         />
       </div>
       <AdminAddClassDialog
@@ -88,6 +96,12 @@ export default function AdminListClassPage() {
         onClose={() => setChoosedClass(null)}
         onOpenChange={onOpenDeleteClassDialog}
         open={isOpenDeleteClassDialog}
+        classes={choosedClass}
+      />
+      <AdminDetailClassDialog
+        onClose={() => setChoosedClass(null)}
+        onOpenChange={onOpenDetailClassDialog}
+        open={isOpenDetailClassDialog}
         classes={choosedClass}
       />
     </>

@@ -16,24 +16,11 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
-// import { cn } from "@/lib/tailwind-utils"
 import { cn } from "@/lib/utils"
-// import { useCreateClassMutation } from "@/store/api/class.api"
 import { useCreateClassMutation } from "@/store/api/class-api"
 import { useFindAllTeacherQuery } from "@/store/api/teacher-api"
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -43,14 +30,9 @@ import { useForm } from "react-hook-form"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminAddClassDialog({
-  open = false,
-  onOpenChange,
-  onClose,
-}) {
+export default function AdminAddClassDialog({ open = false, onOpenChange, onClose }) {
   const [openTeacherList, setOpenTeacherList] = useState(false)
-  const [createClass, { isLoading: isLoadingCreateClass }] =
-    useCreateClassMutation()
+  const [createClass, { isLoading: isLoadingCreateClass }] = useCreateClassMutation()
 
   const {
     data: teachers,
@@ -100,15 +82,11 @@ export default function AdminAddClassDialog({
   }
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
-        <AlertDialogDescription className="sr-only">
-          This action is for adding class.
-        </AlertDialogDescription>
+      <AlertDialogContent className="px-0 max-w-[500px] font-poppins">
+        <AlertDialogDescription className="sr-only">This action is for adding class.</AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
-              Input Data Kelas
-            </span>
+            <span className="text-fs24_36 font-semibold  text-color-1">Input Data Kelas</span>
             <Separator />
           </AlertDialogTitle>
           <Form {...form}>
@@ -134,10 +112,8 @@ export default function AdminAddClassDialog({
                 name="teacherId"
                 render={({ field }) => (
                   <FormItem className="space-y-1">
-                    <FormLabel className=" font-light">Guru</FormLabel>
-                    <Popover
-                      open={openTeacherList}
-                      onOpenChange={setOpenTeacherList}>
+                    <FormLabel>Guru</FormLabel>
+                    <Popover open={openTeacherList} onOpenChange={setOpenTeacherList}>
                       <PopoverTrigger asChild>
                         <Button
                           variant="outline"
@@ -147,8 +123,7 @@ export default function AdminAddClassDialog({
                           {isLoadingGetTeachers && "Sedang Memuat Guru..."}
                           {!isLoadingGetTeachers &&
                             (isSuccessGetTeachers && field?.value
-                              ? teachers.find((sm) => sm.id === field?.value)
-                                  ?.name
+                              ? teachers.find((sm) => sm.id === field?.value)?.name
                               : "Pilih Guru...")}
                           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                         </Button>
@@ -176,9 +151,7 @@ export default function AdminAddClassDialog({
                                       <Check
                                         className={cn(
                                           "mr-2 h-4 w-4",
-                                          field?.value === t.id
-                                            ? "opacity-100"
-                                            : "opacity-0",
+                                          field?.value === t.id ? "opacity-100" : "opacity-0",
                                         )}
                                       />
                                       {t.name}
@@ -214,10 +187,7 @@ export default function AdminAddClassDialog({
             form="add-classes-form"
             type="submit"
             className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
-            {isLoadingCreateClass && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}{" "}
-            Simpan
+            {isLoadingCreateClass && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />} Tambah
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

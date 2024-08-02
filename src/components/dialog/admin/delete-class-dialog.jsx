@@ -8,27 +8,14 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Separator } from "@/components/ui/separator"
 import { useDeleteClassMutation } from "@/store/api/class-api"
 import PropTypes from "prop-types"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminDeleteClassDialog({
-  open = false,
-  onOpenChange,
-  classes,
-  onClose,
-}) {
-  const [deleteClass, { isLoading: isLoadingDeleteClass }] =
-    useDeleteClassMutation()
+export default function AdminDeleteClassDialog({ open = false, onOpenChange, classes, onClose }) {
+  const [deleteClass, { isLoading: isLoadingDeleteClass }] = useDeleteClassMutation()
 
   async function onDeleteParent() {
     try {
@@ -58,58 +45,36 @@ export default function AdminDeleteClassDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
+      <AlertDialogContent className="font-roboto px-0 max-w-[460px]">
         <AlertDialogDescription className="sr-only">
-          This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
+          This action cannot be undone. This will permanently delete your account and remove your data from
+          our servers.
         </AlertDialogDescription>
-        <AlertDialogHeader className="space-y-5">
-          <AlertDialogTitle className="text-txt20_30 text-wrap">
-            Apakah Anda yakin hapus Kelas{" "}
-            <span className="underline underline-offset-4">
-              {classes?.name} ?
-            </span>
+        <AlertDialogHeader className="px-8">
+          <AlertDialogTitle className="text-color-1 text-[24px] font-semibold text-center">
+            Hapus Kelas
           </AlertDialogTitle>
-          <div className="w-full   max-h-[400px] overflow-y-auto">
-            <Table className="">
-              <TableHeader>
-                <TableRow className="bg-color-1   hover:bg-color-1/80">
-                  <TableHead className="w-[120px] text-white"></TableHead>
-                  <TableHead className=" text-white text-[16px] leading-[24px]">
-                    Keterangan
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="[&_tr:last-child]:border ">
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Nama Kelas
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {classes?.name || "-"}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Guru
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {classes?.teacher?.name || "-"}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Jumlah Murid
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {classes?.studentCount || "-"}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+          <Separator />
+          <div>
+            <span className="font-bold">Apakah Anda yakin ingin menghapus Kelas ?</span>
+            <div className="mt-4 grid gap-2">
+              <div className="flex items-center text-sm justify-between">
+                <span className="font-medium">Nama Kelas:</span>
+                <span>{classes?.name || "-"}</span>
+              </div>
+              <div className="flex items-center text-sm justify-between">
+                <span className="font-medium">Guru:</span>
+                <span>{classes?.teacher?.name || "-"}</span>
+              </div>
+              <div className="flex flex-wrap text-sm items-start justify-between">
+                <span className="font-medium">Jumlah Murid:</span>
+                <span className="text-wrap">{classes?.studentCount || "-"}</span>
+              </div>
+            </div>
           </div>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <Separator />
+        <AlertDialogFooter className="px-8">
           <AlertDialogCancel asChild>
             <Button
               type="button"
@@ -126,10 +91,7 @@ export default function AdminDeleteClassDialog({
               await onDeleteParent()
             }}
             className="bg-color-4 text-white hover:text-white hover:bg-color-4/60 gap-x-2 flex items-center">
-            {isLoadingDeleteClass && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}{" "}
-            Hapus
+            {isLoadingDeleteClass && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />} Hapus
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

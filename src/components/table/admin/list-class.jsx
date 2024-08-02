@@ -1,12 +1,5 @@
 import { IconButton } from "@/components/common/icon-button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import PropTypes from "prop-types"
 import { BsPencil } from "react-icons/bs"
 import { FaRegTrashAlt } from "react-icons/fa"
@@ -16,6 +9,7 @@ function AdminClassRows({
   classes,
   isSuccessGetClasses,
   isLoadingGetClasses,
+  onDetailClass,
   onEditClass,
   onDeleteClass,
 }) {
@@ -36,7 +30,7 @@ function AdminClassRows({
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                onEditClass(c)
+                onDetailClass(c)
               }}
               Icon={FaEye}
             />
@@ -97,6 +91,7 @@ export default function AdminListClassTable({
   classes,
   isSuccessGetClasses,
   isLoadingGetClasses,
+  onDetailClass,
   onEditClass,
   onDeleteClass,
 }) {
@@ -116,8 +111,9 @@ export default function AdminListClassTable({
           classes={classes}
           isLoadingGetClasses={isLoadingGetClasses}
           isSuccessGetClasses={isSuccessGetClasses}
-          onDeleteClass={onDeleteClass}
+          onDetailClass={onDetailClass}
           onEditClass={onEditClass}
+          onDeleteClass={onDeleteClass}
         />
       </TableBody>
     </Table>
@@ -128,6 +124,7 @@ AdminListClassTable.propTypes = {
   classes: PropTypes.array,
   isSuccessGetClasses: PropTypes.bool,
   isLoadingGetClasses: PropTypes.bool,
+  onDetailClass: PropTypes.func,
   onEditClass: PropTypes.func,
   onDeleteClass: PropTypes.func,
 }
