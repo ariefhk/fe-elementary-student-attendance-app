@@ -1,5 +1,4 @@
 import { IconButton } from "@/components/common/icon-button"
-import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -12,13 +11,12 @@ import PropTypes from "prop-types"
 import { BsPencil } from "react-icons/bs"
 import { FaRegTrashAlt } from "react-icons/fa"
 import { FaEye } from "react-icons/fa6"
-import { MdOutlineVisibility } from "react-icons/md"
-import { Link } from "react-router-dom"
 
 function AdminStudentRows({
   students,
   isSuccessGetStudents,
   isLoadingGetStudents,
+  onDetailStudent,
   onEditStudent,
   onDeleteStudent,
 }) {
@@ -31,13 +29,10 @@ function AdminStudentRows({
           <TableCell className="font-medium">{index + 1}</TableCell>
           <TableCell>{c.nisn || "-"}</TableCell>
           <TableCell>{c.name || "-"}</TableCell>
-          {/* <TableCell>{c.email || "-"}</TableCell> */}
-          {/* <TableCell>{c.no_telp || "-"}</TableCell> */}
           <TableCell>
             {!c?.gender ? "-" : c.gender === "P" ? "Perempuan" : "Laki-Laki"}
           </TableCell>
           <TableCell>{c.classCount || "-"}</TableCell>
-          {/* <TableCell>{c?.parent?.name || "-"}</TableCell> */}
           <TableCell className="flex gap-x-2">
             <IconButton
               className="h-11 px-5 w-11 bg-color-1 hover:bg-white"
@@ -45,7 +40,7 @@ function AdminStudentRows({
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                onEditStudent(c)
+                onDetailStudent(c)
               }}
               Icon={FaEye}
             />
@@ -80,9 +75,6 @@ function AdminStudentRows({
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="font-medium">-</TableCell>
-          {/* <TableCell className="font-medium">-</TableCell>
-          <TableCell className="font-medium">-</TableCell> */}
-          {/* <TableCell className="font-medium">-</TableCell> */}
           <TableCell className="font-medium">-</TableCell>
           <TableCell className="flex gap-x-2">
             <div className="w-max flex gap-x-2 h-[40px] px-5 bg-gray-300 animate-pulse" />
@@ -109,6 +101,7 @@ export default function AdminListStudentTable({
   students,
   isSuccessGetStudents,
   isLoadingGetStudents,
+  onDetailStudent,
   onEditStudent,
   onDeleteStudent,
 }) {
@@ -130,6 +123,7 @@ export default function AdminListStudentTable({
           isLoadingGetStudents={isLoadingGetStudents}
           isSuccessGetStudents={isSuccessGetStudents}
           onDeleteStudent={onDeleteStudent}
+          onDetailStudent={onDetailStudent}
           onEditStudent={onEditStudent}
         />
       </TableBody>
@@ -143,4 +137,5 @@ AdminListStudentTable.propTypes = {
   isLoadingGetStudents: PropTypes.bool,
   onEditStudent: PropTypes.func,
   onDeleteStudent: PropTypes.func,
+  onDetailStudent: PropTypes.func,
 }

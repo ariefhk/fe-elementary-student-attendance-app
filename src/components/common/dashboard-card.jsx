@@ -15,7 +15,7 @@ export default function DashboardCard({ className, icon, name, to }) {
       {
         <>
           <Icon className="w-10 h-10  text-white" />
-          <span className="text-txt18_20">{name}</span>
+          <span className="text-txt18_20 font-medium">{name}</span>
         </>
       }
     </Link>

@@ -17,10 +17,18 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input, PasswordInput } from "@/components/ui/input"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
+import { GENDER } from "@/constant/gender"
+import usePreviewImage, { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
 import { useCreateTeacherMutation } from "@/store/api/teacher-api"
-// import { useCreateTeacherMutation } from "@/store/api/teacher.api"
 import PropTypes from "prop-types"
 import { useForm } from "react-hook-form"
 import { BsArrowRepeat } from "react-icons/bs"
@@ -34,27 +42,34 @@ export default function AdminAddTeacherDialog({
   const [createTeacher, { isLoading: isLoadingCreateTeacher }] =
     useCreateTeacherMutation()
 
-  // const [createTeacher, { isLoading: isLoadingCreateTeacher }] =
-  //   useCreateTeacherMutation()
+  const {
+    previewImage: previewProfilePicture,
+    onSetPreviewImage: onSetPreviewProfilePicture,
+    removePreviewImage: removePreviewProfilePicture,
+  } = usePreviewImage(IMAGE_PLACEHOLDER(200, 200))
 
   const form = useForm({
     defaultValues: {
+      email: "",
+      password: "",
+      profilePicture: "",
+      gender: "",
       nip: "",
       name: "",
       address: "",
-      email: "",
-      password: "",
     },
   })
   const isFormValueChanged = form.formState.isDirty
 
   async function onSubmit(values) {
     const createTeacherData = {
+      email: values.email,
+      password: values.password,
+      profilePicture: values.profilePicture,
+      gender: values.gender,
       nip: values.nip,
       name: values.name,
       address: values.address,
-      email: values.email,
-      password: values.password,
     }
     // console.log(createTeacherData)
     try {
@@ -88,7 +103,7 @@ export default function AdminAddTeacherDialog({
         </AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
+            <span className="text-fs24_36 font-semibold  text-color-1">
               Input Data Guru
             </span>
             <Separator />
@@ -98,6 +113,39 @@ export default function AdminAddTeacherDialog({
               id="add-teacher-form"
               onSubmit={form.handleSubmit(onSubmit)}
               className="overflow-auto py-2  w-full px-2 space-y-6 text-start">
+              {previewProfilePicture && (
+                <div className="flex justify-center items-center">
+                  <img
+                    src={previewProfilePicture}
+                    className="w-[200px] h-[200px] flex-shrink-0 rounded-full"
+                  />
+                </div>
+              )}
+              <FormField
+                control={form.control}
+                name="profilePicture"
+                render={({ field: { value, onChange, ...field } }) => (
+                  <FormItem>
+                    <FormLabel>Foto Profile</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={value?.fileName}
+                        onChange={(event) => {
+                          const file = event?.target?.files[0]
+                          if (!file) {
+                            return
+                          }
+                          onSetPreviewProfilePicture(URL.createObjectURL(file))
+                          onChange(file)
+                        }}
+                        type="file"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -159,6 +207,34 @@ export default function AdminAddTeacherDialog({
               />
               <FormField
                 control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Jenis Kelamin</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Jenis Kelamin" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {GENDER.map((g, index) => {
+                          return (
+                            <SelectItem key={index + 1} value={g.value}>
+                              {g.label}
+                            </SelectItem>
+                          )
+                        })}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
                 name="address"
                 render={({ field }) => (
                   <FormItem>
@@ -179,6 +255,7 @@ export default function AdminAddTeacherDialog({
             <Button
               onClick={() => {
                 form.reset()
+                removePreviewProfilePicture()
                 typeof onClose === "function" && onClose()
               }}
               className="bg-color-4 text-white hover:text-white hover:bg-color-4/60">
@@ -193,7 +270,7 @@ export default function AdminAddTeacherDialog({
             {isLoadingCreateTeacher && (
               <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
             )}
-            Simpan
+            Tambah
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

@@ -1,5 +1,4 @@
 import { IconButton } from "@/components/common/icon-button"
-import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ function AdminTeacherRows({
   teachers,
   isSuccessGetTeachers,
   isLoadingGetTeachers,
+  onDetailTeacher,
   onEditTeacher,
   onDeleteTeacher,
 }) {
@@ -38,7 +38,7 @@ function AdminTeacherRows({
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                onEditTeacher(t)
+                onDetailTeacher(t)
               }}
               Icon={FaEye}
             />
@@ -99,6 +99,7 @@ export default function AdminListTeacherTable({
   teachers,
   isSuccessGetTeachers,
   isLoadingGetTeachers,
+  onDetailTeacher,
   onEditTeacher,
   onDeleteTeacher,
 }) {
@@ -119,8 +120,9 @@ export default function AdminListTeacherTable({
           teachers={teachers}
           isLoadingGetTeachers={isLoadingGetTeachers}
           isSuccessGetTeachers={isSuccessGetTeachers}
-          onDeleteTeacher={onDeleteTeacher}
+          onDetailTeacher={onDetailTeacher}
           onEditTeacher={onEditTeacher}
+          onDeleteTeacher={onDeleteTeacher}
         />
       </TableBody>
     </Table>
@@ -133,4 +135,5 @@ AdminListTeacherTable.propTypes = {
   isLoadingGetTeachers: PropTypes.bool,
   onEditTeacher: PropTypes.func,
   onDeleteTeacher: PropTypes.func,
+  onDetailTeacher: PropTypes.func,
 }

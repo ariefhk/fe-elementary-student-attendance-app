@@ -1,5 +1,4 @@
 import { IconButton } from "@/components/common/icon-button"
-import { Button } from "@/components/ui/button"
 import {
   Table,
   TableBody,
@@ -17,6 +16,7 @@ function AdminParentRows({
   parents,
   isSuccessGetParents,
   isLoadingGetParents,
+  onDetailParent,
   onEditParent,
   onDeleteParent,
 }) {
@@ -37,7 +37,7 @@ function AdminParentRows({
               onClick={(e) => {
                 e.preventDefault()
                 e.stopPropagation()
-                onEditParent(t)
+                onDetailParent(t)
               }}
               Icon={FaEye}
             />
@@ -97,6 +97,7 @@ export default function AdminListParentTable({
   parents,
   isSuccessGetParents,
   isLoadingGetParents,
+  onDetailParent,
   onEditParent,
   onDeleteParent,
 }) {
@@ -118,6 +119,7 @@ export default function AdminListParentTable({
           isSuccessGetParents={isSuccessGetParents}
           onDeleteParent={onDeleteParent}
           onEditParent={onEditParent}
+          onDetailParent={onDetailParent}
         />
       </TableBody>
     </Table>
@@ -130,4 +132,5 @@ AdminListParentTable.propTypes = {
   isLoadingGetParents: PropTypes.bool,
   onEditParent: PropTypes.func,
   onDeleteParent: PropTypes.func,
+  onDetailParent: PropTypes.func,
 }

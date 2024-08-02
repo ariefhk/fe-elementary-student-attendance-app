@@ -17,12 +17,18 @@ const initialParentSearch = {
 
 export default function AdminListParentPage() {
   const [choosedParent, setChoosedParent] = useState(null)
+
   const { values: searchParentValue, onChange: onChangeSearchParent } =
     useInput(initialParentSearch)
 
   const {
     isOpenDialog: isOpenAddParentDialog,
     onOpenDialog: onOpenAddParentDialog,
+  } = useDialog()
+
+  const {
+    isOpenDialog: isOpenDetailParentDialog,
+    onOpenDialog: onOpenDetailParentDialog,
   } = useDialog()
 
   const {
@@ -51,6 +57,11 @@ export default function AdminListParentPage() {
   const onHandleDeleteParent = (parent) => {
     setChoosedParent(parent)
     onOpenDeleteParentDialog(true)
+  }
+
+  const onHandleDetailParent = (parent) => {
+    setChoosedParent(parent)
+    onOpenDetailParentDialog(true)
   }
 
   return (

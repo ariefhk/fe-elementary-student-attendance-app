@@ -1,6 +1,7 @@
 import { IconButton } from "@/components/common/icon-button"
 import AdminAddTeacherDialog from "@/components/dialog/admin/add-teacher-dialog"
 import AdminDeleteTeacherDialog from "@/components/dialog/admin/delete-teacher-dialog"
+import AdminDetailTeacherDialog from "@/components/dialog/admin/detail-teacher-dialog"
 import AdminEditTeacherDialog from "@/components/dialog/admin/edit-teacher-dialog"
 import AdminListTeacherTable from "@/components/table/admin/list-teacher"
 import { Input } from "@/components/ui/input"
@@ -28,6 +29,10 @@ export default function AdminListTeacherPage() {
     isOpenDialog: isOpenEditTeacherDialog,
     onOpenDialog: onOpenEditTeacherDialog,
   } = useDialog()
+  const {
+    isOpenDialog: isOpenDetailTeacherDialog,
+    onOpenDialog: onOpenDetailTeacherDialog,
+  } = useDialog()
 
   const {
     isOpenDialog: isOpenDeleteTeacherDialog,
@@ -50,6 +55,10 @@ export default function AdminListTeacherPage() {
   const onHandleDeleteTeacher = (teacher) => {
     setChoosedTeacher(teacher)
     onOpenDeleteTeacherDialog(true)
+  }
+  const onHandleDetailTeacher = (teacher) => {
+    setChoosedTeacher(teacher)
+    onOpenDetailTeacherDialog(true)
   }
 
   return (
@@ -79,6 +88,7 @@ export default function AdminListTeacherPage() {
         <AdminListTeacherTable
           onDeleteTeacher={onHandleDeleteTeacher}
           onEditTeacher={onHandleEditTeacher}
+          onDetailTeacher={onHandleDetailTeacher}
           isLoadingGetTeachers={isLoadingGetTeachers}
           isSuccessGetTeachers={isSuccessGetTeachers}
           teachers={teachers}
@@ -99,6 +109,12 @@ export default function AdminListTeacherPage() {
         onClose={() => setChoosedTeacher(null)}
         onOpenChange={onOpenEditTeacherDialog}
         open={isOpenEditTeacherDialog}
+        teacher={choosedTeacher}
+      />
+      <AdminDetailTeacherDialog
+        onClose={() => setChoosedTeacher(null)}
+        onOpenChange={onOpenDetailTeacherDialog}
+        open={isOpenDetailTeacherDialog}
         teacher={choosedTeacher}
       />
     </>
