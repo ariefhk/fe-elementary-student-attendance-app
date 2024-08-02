@@ -3,7 +3,6 @@ import AdminAddStudentDialog from "@/components/dialog/admin/add-student-dialog"
 import AdminDeleteStudentDialog from "@/components/dialog/admin/delete-student-dialog"
 import AdminEditStudentDialog from "@/components/dialog/admin/edit-student-dialog"
 import AdminListStudentTable from "@/components/table/admin/list-student"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useDialog from "@/hook/useDialog"
 import useInput from "@/hook/useInput"
@@ -17,23 +16,13 @@ const initialStudentSearch = {
 
 export default function AdminListStudentPage() {
   const [choosedStudent, setChoosedStudent] = useState(null)
-  const { values: searchStudentValue, onChange: onChangeSearchStudent } =
-    useInput(initialStudentSearch)
+  const { values: searchStudentValue, onChange: onChangeSearchStudent } = useInput(initialStudentSearch)
 
-  const {
-    isOpenDialog: isOpenAddStudentDialog,
-    onOpenDialog: onOpenAddStudentDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenAddStudentDialog, onOpenDialog: onOpenAddStudentDialog } = useDialog()
 
-  const {
-    isOpenDialog: isOpenEditStudentDialog,
-    onOpenDialog: onOpenEditStudentDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenEditStudentDialog, onOpenDialog: onOpenEditStudentDialog } = useDialog()
 
-  const {
-    isOpenDialog: isOpenDeleteStudentDialog,
-    onOpenDialog: onOpenDeleteStudentDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenDeleteStudentDialog, onOpenDialog: onOpenDeleteStudentDialog } = useDialog()
 
   const {
     data: students,

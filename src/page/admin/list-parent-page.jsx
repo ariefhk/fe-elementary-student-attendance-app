@@ -1,9 +1,9 @@
 import { IconButton } from "@/components/common/icon-button"
 import AdminAddParentDialog from "@/components/dialog/admin/add-parent-dialog"
 import AdminDeleteParentDialog from "@/components/dialog/admin/delete-parent-dialog"
+import AdminDetailParentDialog from "@/components/dialog/admin/detail-parent-dialog"
 import AdminEditParentDialog from "@/components/dialog/admin/edit-parent-dialog"
 import AdminListParentTable from "@/components/table/admin/list-parent"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useDialog from "@/hook/useDialog"
 import useInput from "@/hook/useInput"
@@ -18,28 +18,15 @@ const initialParentSearch = {
 export default function AdminListParentPage() {
   const [choosedParent, setChoosedParent] = useState(null)
 
-  const { values: searchParentValue, onChange: onChangeSearchParent } =
-    useInput(initialParentSearch)
+  const { values: searchParentValue, onChange: onChangeSearchParent } = useInput(initialParentSearch)
 
-  const {
-    isOpenDialog: isOpenAddParentDialog,
-    onOpenDialog: onOpenAddParentDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenAddParentDialog, onOpenDialog: onOpenAddParentDialog } = useDialog()
 
-  const {
-    isOpenDialog: isOpenDetailParentDialog,
-    onOpenDialog: onOpenDetailParentDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenDetailParentDialog, onOpenDialog: onOpenDetailParentDialog } = useDialog()
 
-  const {
-    isOpenDialog: isOpenEditParentDialog,
-    onOpenDialog: onOpenEditParentDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenEditParentDialog, onOpenDialog: onOpenEditParentDialog } = useDialog()
 
-  const {
-    isOpenDialog: isOpenDeleteParentDialog,
-    onOpenDialog: onOpenDeleteParentDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenDeleteParentDialog, onOpenDialog: onOpenDeleteParentDialog } = useDialog()
 
   const {
     data: parents,
@@ -67,9 +54,7 @@ export default function AdminListParentPage() {
   return (
     <>
       <div className=" flex justify-between">
-        <h1 className="text-fs30_40 font-semibold text-color-1">
-          Data Orang Tua
-        </h1>
+        <h1 className="text-fs30_40 font-semibold text-color-1">Data Orang Tua</h1>
       </div>
       <div className="flex flex-col gap-y-8 ">
         <div className="flex justify-between items-center">
@@ -94,6 +79,7 @@ export default function AdminListParentPage() {
           parents={parents}
           isLoadingGetParents={isLoadingGetParents}
           isSuccessGetParents={isSuccessGetParents}
+          onDetailParent={onHandleDetailParent}
           onEditParent={onHandleEditParent}
           onDeleteParent={onHandleDeleteParent}
         />
@@ -113,6 +99,12 @@ export default function AdminListParentPage() {
         onClose={() => setChoosedParent(null)}
         onOpenChange={onOpenDeleteParentDialog}
         open={isOpenDeleteParentDialog}
+        parent={choosedParent}
+      />
+      <AdminDetailParentDialog
+        onClose={() => setChoosedParent(null)}
+        onOpenChange={onOpenDetailParentDialog}
+        open={isOpenDetailParentDialog}
         parent={choosedParent}
       />
     </>

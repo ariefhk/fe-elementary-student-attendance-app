@@ -1,12 +1,5 @@
 import { IconButton } from "@/components/common/icon-button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import PropTypes from "prop-types"
 import { BsPencil } from "react-icons/bs"
 import { FaRegTrashAlt } from "react-icons/fa"
@@ -117,9 +110,9 @@ export default function AdminListParentTable({
           parents={parents}
           isLoadingGetParents={isLoadingGetParents}
           isSuccessGetParents={isSuccessGetParents}
+          onDetailParent={onDetailParent}
           onDeleteParent={onDeleteParent}
           onEditParent={onEditParent}
-          onDetailParent={onDetailParent}
         />
       </TableBody>
     </Table>
@@ -130,7 +123,7 @@ AdminListParentTable.propTypes = {
   parents: PropTypes.array,
   isSuccessGetParents: PropTypes.bool,
   isLoadingGetParents: PropTypes.bool,
+  onDetailParent: PropTypes.func,
   onEditParent: PropTypes.func,
   onDeleteParent: PropTypes.func,
-  onDetailParent: PropTypes.func,
 }

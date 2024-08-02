@@ -8,27 +8,15 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Separator } from "@/components/ui/separator"
+import { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
 import { useDeleteParentMutation } from "@/store/api/parent-api"
 import PropTypes from "prop-types"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminDeleteParentDialog({
-  open = false,
-  onOpenChange,
-  parent,
-  onClose,
-}) {
-  const [deleteParent, { isLoading: isLoadingDeleteParent }] =
-    useDeleteParentMutation()
+export default function AdminDeleteParentDialog({ open = false, onOpenChange, parent, onClose }) {
+  const [deleteParent, { isLoading: isLoadingDeleteParent }] = useDeleteParentMutation()
 
   async function onDeleteParent() {
     try {
@@ -58,57 +46,43 @@ export default function AdminDeleteParentDialog({
 
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
-      <AlertDialogContent>
+      <AlertDialogContent className="font-roboto px-0 max-w-[460px]">
         <AlertDialogDescription className="sr-only">
-          This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
+          This action cannot be undone. This will permanently delete your account and remove your data from
+          our servers.
         </AlertDialogDescription>
-        <AlertDialogHeader className="space-y-5">
-          <AlertDialogTitle className="text-txt20_30 text-wrap">
-            Apakah Anda yakin hapus Orang Tua{" "}
-            <span className="underline underline-offset-4">{parent?.name}</span>
-            ?
+        <AlertDialogHeader className="px-8">
+          <AlertDialogTitle className="text-color-1 text-[24px] font-semibold text-center">
+            Hapus Orang Tua
           </AlertDialogTitle>
-          <div className="w-full   max-h-[400px] overflow-y-auto">
-            <Table className="">
-              <TableHeader>
-                <TableRow className="bg-color-1   hover:bg-color-1/80">
-                  <TableHead className="w-[120px] text-white"></TableHead>
-                  <TableHead className=" text-white text-[16px] leading-[24px]">
-                    Keterangan
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="[&_tr:last-child]:border ">
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Nama
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {parent?.name || "-"}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Email
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {parent?.email || "-"}
-                  </TableCell>
-                </TableRow>
-                <TableRow className="border">
-                  <TableCell className="font-medium text-txt16_24">
-                    Address
-                  </TableCell>
-                  <TableCell className="text-txt16_24">
-                    {parent?.address || "-"}
-                  </TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+          <Separator />
+          <div>
+            <span className="font-bold">Apakah Anda yakin ingin menghapus Orang Tua ?</span>
+            <div className="mt-4 grid gap-2">
+              <div className="flex justify-center py-2 items-center">
+                <img
+                  src={parent?.profilePicture ? parent.profilePicture : IMAGE_PLACEHOLDER(120, 120)}
+                  alt="Profile"
+                  className="w-[120px] h-[120px] flex-shrink-0 rounded-full object-cover"
+                />
+              </div>
+              <div className="flex items-center text-sm justify-between">
+                <span className="font-medium">Nama:</span>
+                <span>{parent?.name || "-"}</span>
+              </div>
+              <div className="flex items-center text-sm justify-between">
+                <span className="font-medium">Email:</span>
+                <span>{parent?.email || "-"}</span>
+              </div>
+              <div className="flex flex-wrap text-sm items-start justify-between">
+                <span className="font-medium">Alamat:</span>
+                <span className="text-wrap">{parent?.address || "-"}</span>
+              </div>
+            </div>
           </div>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <Separator />
+        <AlertDialogFooter className="px-8">
           <AlertDialogCancel asChild>
             <Button
               type="button"
@@ -125,10 +99,7 @@ export default function AdminDeleteParentDialog({
               await onDeleteParent()
             }}
             className="bg-color-4 text-white hover:text-white hover:bg-color-4/60 gap-x-2 flex items-center">
-            {isLoadingDeleteParent && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}{" "}
-            Hapus
+            {isLoadingDeleteParent && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />} Hapus
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

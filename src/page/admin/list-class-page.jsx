@@ -3,7 +3,6 @@ import AdminAddClassDialog from "@/components/dialog/admin/add-class-dialog"
 import AdminDeleteClassDialog from "@/components/dialog/admin/delete-class-dialog"
 import AdminEditClassDialog from "@/components/dialog/admin/edit-class-dialog"
 import AdminListClassTable from "@/components/table/admin/list-class"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import useDialog from "@/hook/useDialog"
 import useInput from "@/hook/useInput"
@@ -17,24 +16,13 @@ const initialClassSearchInput = {
 
 export default function AdminListClassPage() {
   const [choosedClass, setChoosedClass] = useState(null)
-  const { values: searchClassValue, onChange: onChangeClass } = useInput(
-    initialClassSearchInput,
-  )
+  const { values: searchClassValue, onChange: onChangeClass } = useInput(initialClassSearchInput)
 
-  const {
-    isOpenDialog: isOpenAddClassDialog,
-    onOpenDialog: onOpenAddClassDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenAddClassDialog, onOpenDialog: onOpenAddClassDialog } = useDialog()
 
-  const {
-    isOpenDialog: isOpenEditClassDialog,
-    onOpenDialog: onOpenEditClassDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenEditClassDialog, onOpenDialog: onOpenEditClassDialog } = useDialog()
 
-  const {
-    isOpenDialog: isOpenDeleteClassDialog,
-    onOpenDialog: onOpenDeleteClassDialog,
-  } = useDialog()
+  const { isOpenDialog: isOpenDeleteClassDialog, onOpenDialog: onOpenDeleteClassDialog } = useDialog()
 
   const {
     data: classes,

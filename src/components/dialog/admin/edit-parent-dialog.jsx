@@ -8,17 +8,13 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input, PasswordInput } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
+import { GENDER } from "@/constant/gender"
+import usePreviewImage, { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
 import { useUpdateParentMutation } from "@/store/api/parent-api"
 import PropTypes from "prop-types"
 import { useEffect } from "react"
@@ -26,22 +22,24 @@ import { useForm } from "react-hook-form"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminEditParentDialog({
-  open = false,
-  onOpenChange,
-  parent,
-  onClose,
-}) {
-  const [updateParent, { isLoading: isLoadingUpdateParent }] =
-    useUpdateParentMutation()
+export default function AdminEditParentDialog({ open = false, onOpenChange, parent, onClose }) {
+  const [updateParent, { isLoading: isLoadingUpdateParent }] = useUpdateParentMutation()
+
+  const {
+    previewImage: previewProfilePicture,
+    onSetPreviewImage: onSetPreviewProfilePicture,
+    removePreviewImage: removePreviewProfilePicture,
+  } = usePreviewImage(IMAGE_PLACEHOLDER(200, 200))
 
   const form = useForm({
     reValidateMode: "onChange",
     mode: "onBlur",
     defaultValues: {
-      name: "",
       email: "",
       password: "",
+      profilePicture: "",
+      gender: "",
+      name: "",
       address: "",
     },
   })
@@ -50,19 +48,25 @@ export default function AdminEditParentDialog({
 
   useEffect(() => {
     form.reset({
-      name: parent?.name ?? "",
       email: parent?.email ?? "",
-      address: parent?.address ?? "",
       password: "",
+      gender: parent?.gender ?? "",
+      name: parent?.name ?? "",
+      address: parent?.address ?? "",
     })
-  }, [form, parent])
+    if (parent?.profilePicture) {
+      onSetPreviewProfilePicture(parent.profilePicture)
+    }
+  }, [form, parent, onSetPreviewProfilePicture])
 
   async function onSubmit(values) {
     const updatedParentData = {
       parentId: parent.id,
-      name: values.name,
       email: values.email,
       password: values.password,
+      profilePicture: values.profilePicture,
+      gender: values.gender,
+      name: values.name,
       address: values.address,
     }
     // console.log(updatedParentData)
@@ -93,14 +97,10 @@ export default function AdminEditParentDialog({
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
-        <AlertDialogDescription className="sr-only">
-          This action is for edit parent.
-        </AlertDialogDescription>
+        <AlertDialogDescription className="sr-only">This action is for edit parent.</AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
-              Edit Data Orang Tua
-            </span>
+            <span className="text-fs24_36 font-semibold  text-color-1">Edit Data Orang Tua</span>
             <Separator />
           </AlertDialogTitle>
           <Form {...form}>
@@ -108,6 +108,39 @@ export default function AdminEditParentDialog({
               id="edit-parent-form"
               onSubmit={form.handleSubmit(onSubmit)}
               className="overflow-auto  w-full px-2 py-2 space-y-6 text-start">
+              {previewProfilePicture && (
+                <div className="flex justify-center items-center">
+                  <img
+                    src={previewProfilePicture}
+                    className="w-[200px] h-[200px] flex-shrink-0 rounded-full"
+                  />
+                </div>
+              )}
+              <FormField
+                control={form.control}
+                name="profilePicture"
+                render={({ field: { value, onChange, ...field } }) => (
+                  <FormItem>
+                    <FormLabel>Foto Profile</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={value?.fileName}
+                        onChange={(event) => {
+                          const file = event?.target?.files[0]
+                          if (!file) {
+                            return
+                          }
+                          onSetPreviewProfilePicture(URL.createObjectURL(file))
+                          onChange(file)
+                        }}
+                        type="file"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -115,11 +148,7 @@ export default function AdminEditParentDialog({
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Masukan email orang tua"
-                        {...field}
-                      />
+                      <Input type="email" placeholder="Masukan email orang tua" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -132,10 +161,7 @@ export default function AdminEditParentDialog({
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordInput
-                        placeholder="Masukan password terbaru jika ingin merubah"
-                        {...field}
-                      />
+                      <PasswordInput placeholder="Masukan password terbaru jika ingin merubah" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -150,6 +176,32 @@ export default function AdminEditParentDialog({
                     <FormControl>
                       <Input placeholder="Masukan nama orang tua" {...field} />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Jenis Kelamin</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Jenis Kelamin" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {GENDER.map((g, index) => {
+                          return (
+                            <SelectItem key={index + 1} value={g.value}>
+                              {g.label}
+                            </SelectItem>
+                          )
+                        })}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -176,6 +228,8 @@ export default function AdminEditParentDialog({
             <Button
               type="button"
               onClick={() => {
+                form.reset()
+                removePreviewProfilePicture()
                 typeof onClose === "function" && onClose()
               }}
               className="bg-color-4 text-white hover:text-white hover:bg-color-4/60">
@@ -187,9 +241,7 @@ export default function AdminEditParentDialog({
             form="edit-parent-form"
             type="submit"
             className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
-            {isLoadingUpdateParent && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}
+            {isLoadingUpdateParent && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />}
             Ubah
           </Button>
         </AlertDialogFooter>

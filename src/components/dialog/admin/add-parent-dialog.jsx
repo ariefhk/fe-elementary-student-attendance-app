@@ -8,46 +8,47 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form"
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Input, PasswordInput } from "@/components/ui/input"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
+import { GENDER } from "@/constant/gender"
+import usePreviewImage, { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
 import { useCreateParentMutation } from "@/store/api/parent-api"
 import PropTypes from "prop-types"
 import { useForm } from "react-hook-form"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminAddParentDialog({
-  open = false,
-  onOpenChange,
-  onClose,
-}) {
-  const [createParent, { isLoading: isLoadingCreateParent }] =
-    useCreateParentMutation()
+export default function AdminAddParentDialog({ open = false, onOpenChange, onClose }) {
+  const [createParent, { isLoading: isLoadingCreateParent }] = useCreateParentMutation()
+
+  const {
+    previewImage: previewProfilePicture,
+    onSetPreviewImage: onSetPreviewProfilePicture,
+    removePreviewImage: removePreviewProfilePicture,
+  } = usePreviewImage(IMAGE_PLACEHOLDER(200, 200))
 
   const form = useForm({
     defaultValues: {
-      name: "",
-      address: "",
       email: "",
       password: "",
+      profilePicture: "",
+      gender: "",
+      name: "",
+      address: "",
     },
   })
   const isFormValueChanged = form.formState.isDirty
 
   async function onSubmit(values) {
     const createParentData = {
-      name: values.name,
       email: values.email,
       password: values.password,
+      profilePicture: values.profilePicture,
+      gender: values.gender,
+      name: values.name,
       address: values.address,
     }
     // console.log(createParentData)
@@ -77,14 +78,10 @@ export default function AdminAddParentDialog({
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="px-0 max-w-[600px] font-poppins">
-        <AlertDialogDescription className="sr-only">
-          This action is for adding parent.
-        </AlertDialogDescription>
+        <AlertDialogDescription className="sr-only">This action is for adding parent.</AlertDialogDescription>
         <AlertDialogHeader className=" max-h-[400px] px-8 flex-col gap-y-0 items-center gap-x-16    ">
           <AlertDialogTitle className="space-y-5  flex flex-col items-center w-full">
-            <span className="text-txt24_36 font-medium  text-color-6">
-              Input Data Orang Tua
-            </span>
+            <span className="text-fs24_36 font-semibold  text-color-1">Input Data Orang Tua</span>
             <Separator />
           </AlertDialogTitle>
           <Form {...form}>
@@ -92,6 +89,39 @@ export default function AdminAddParentDialog({
               id="add-parent-form"
               onSubmit={form.handleSubmit(onSubmit)}
               className="overflow-auto  w-full px-2 py-2 space-y-6 text-start">
+              {previewProfilePicture && (
+                <div className="flex justify-center items-center">
+                  <img
+                    src={previewProfilePicture}
+                    className="w-[200px] h-[200px] flex-shrink-0 rounded-full"
+                  />
+                </div>
+              )}
+              <FormField
+                control={form.control}
+                name="profilePicture"
+                render={({ field: { value, onChange, ...field } }) => (
+                  <FormItem>
+                    <FormLabel>Foto Profile</FormLabel>
+                    <FormControl>
+                      <Input
+                        {...field}
+                        value={value?.fileName}
+                        onChange={(event) => {
+                          const file = event?.target?.files[0]
+                          if (!file) {
+                            return
+                          }
+                          onSetPreviewProfilePicture(URL.createObjectURL(file))
+                          onChange(file)
+                        }}
+                        type="file"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
               <FormField
                 control={form.control}
                 name="email"
@@ -99,11 +129,7 @@ export default function AdminAddParentDialog({
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Masukan email orang tua"
-                        {...field}
-                      />
+                      <Input type="email" placeholder="Masukan email orang tua" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -116,10 +142,7 @@ export default function AdminAddParentDialog({
                   <FormItem>
                     <FormLabel>Password</FormLabel>
                     <FormControl>
-                      <PasswordInput
-                        placeholder="Masukan password orang tua"
-                        {...field}
-                      />
+                      <PasswordInput placeholder="Masukan password orang tua" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -134,6 +157,32 @@ export default function AdminAddParentDialog({
                     <FormControl>
                       <Input placeholder="Masukan nama orang tua" {...field} />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Jenis Kelamin</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih Jenis Kelamin" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {GENDER.map((g, index) => {
+                          return (
+                            <SelectItem key={index + 1} value={g.value}>
+                              {g.label}
+                            </SelectItem>
+                          )
+                        })}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -160,6 +209,7 @@ export default function AdminAddParentDialog({
             <Button
               onClick={() => {
                 form.reset()
+                removePreviewProfilePicture()
                 typeof onClose === "function" && onClose()
               }}
               className="bg-color-4 text-white hover:text-white hover:bg-color-4/60">
@@ -171,9 +221,7 @@ export default function AdminAddParentDialog({
             form="add-parent-form"
             type="submit"
             className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
-            {isLoadingCreateParent && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}{" "}
+            {isLoadingCreateParent && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />}{" "}
             Simpan
           </Button>
         </AlertDialogFooter>
