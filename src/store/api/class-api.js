@@ -19,10 +19,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
       },
       providesTags: (result) => {
         return result
-          ? [
-              ...result.map(({ id }) => ({ type: "CLASS", id })),
-              { type: "CLASS", id: "LIST_OF_CLASS" },
-            ]
+          ? [...result.map(({ id }) => ({ type: "CLASS", id })), { type: "CLASS", id: "LIST_OF_CLASS" }]
           : [{ type: "CLASS", id: "LIST_OF_CLASS" }]
       },
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
@@ -84,26 +81,13 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         const teacherClasses = response?.data
         return teacherClasses
       },
-      providesTags: (result) => {
-        return result?.classes
-          ? [
-              ...result.classes.map(({ id }) => ({
-                type: "CLASS",
-                id: `${id}_BY_TEACHER`,
-              })),
-              { type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" },
-            ]
-          : [{ type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" }]
-      },
+      providesTags: () => [{ type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" }],
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         dispatch(showLoading())
         try {
           await queryFulfilled
         } catch (error) {
-          console.log(
-            "LOGG ERROR ON QUERYSTARTED GET ALL CLASS BY TEACHER: ",
-            error,
-          )
+          console.log("LOGG ERROR ON QUERYSTARTED GET ALL CLASS BY TEACHER: ", error)
         }
         dispatch(hideLoading())
       },
@@ -128,10 +112,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         try {
           await queryFulfilled
         } catch (error) {
-          console.log(
-            "LOGG ERROR ON QUERYSTARTED GET ALL CLASS BY STUDENT: ",
-            error,
-          )
+          console.log("LOGG ERROR ON QUERYSTARTED GET ALL CLASS BY STUDENT: ", error)
         }
         dispatch(hideLoading())
       },

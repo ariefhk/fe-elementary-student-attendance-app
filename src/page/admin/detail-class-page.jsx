@@ -47,8 +47,6 @@ export default function AdminDetailClassPage() {
     return []
   }, [isSuccessGetStudentInsideClass, searchStudentByClassValue.name, studentInsideClass])
 
-  console.log(studentInsideClass)
-
   const onHandleDeleteStudentFormClass = async (student) => {
     setChoosedStudent(student)
     onOpenDeleteStudentFromClassDialog(true)
