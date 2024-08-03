@@ -1,21 +1,9 @@
-import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { IconButtonLink } from "@/components/common/icon-button-link"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import PropTypes from "prop-types"
-import { Link } from "react-router-dom"
+import { FaEye, FaUsersLine } from "react-icons/fa6"
 
-function ParentClassRows({
-  studentId,
-  classes,
-  isSuccessGetClasses,
-  isLoadingGetClasses,
-}) {
+function ParentClassRows({ studentId, classes, isSuccessGetClasses, isLoadingGetClasses }) {
   let tableContent
 
   if (!isLoadingGetClasses && isSuccessGetClasses && classes.length > 0) {
@@ -26,18 +14,20 @@ function ParentClassRows({
           <TableCell>{c?.name || "-"}</TableCell>
           <TableCell>{c?.teacher?.name || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
-            <Button asChild>
-              <Link
-                to={`/parent/presence/student/${studentId}/classes/${c.id}/detail-class`}>
-                Detail Kelas
-              </Link>
-            </Button>
-            <Button asChild>
-              <Link
-                to={`/parent/presence/student/${studentId}/classes/${c.id}/detail-presence`}>
-                Absensi
-              </Link>
-            </Button>
+            <IconButtonLink
+              to={`/parent/presence/student/${studentId}/classes/${c.id}/detail-presence`}
+              name="Absensi"
+              className="h-11 px-5 w-[150px] gap-x-4 hover:text-color-1 text-white  bg-color-1 hover:bg-white"
+              iconClassName="text-white group-hover:text-color-1 w-5 h-5"
+              Icon={FaUsersLine}
+            />
+            <IconButtonLink
+              to={`/parent/presence/student/${studentId}/classes/${c.id}/detail-class`}
+              name="Detail Kelas"
+              className="h-11 px-5 w-[150px] gap-x-4 hover:text-color-1 text-white  bg-color-1 hover:bg-white"
+              iconClassName="text-white group-hover:text-color-1 w-5 h-5"
+              Icon={FaEye}
+            />
           </TableCell>
         </TableRow>
       )
@@ -80,8 +70,8 @@ export default function ParentListClassTable({
       <TableHeader>
         <TableRow className="bg-color-1   hover:bg-color-1/80">
           <TableHead className="w-[20px] text-white">No</TableHead>
-          <TableHead className="w-[160px] text-white">Nama Kelas</TableHead>
-          <TableHead className="w-[300px] text-white">Guru</TableHead>
+          <TableHead className="w-[300px] text-white">Nama Kelas</TableHead>
+          <TableHead className="w-[200px] text-white">Guru</TableHead>
           {/* <TableHead className="w-[120px] text-white">Jumlah Murid</TableHead> */}
           <TableHead className="w-[200px] text-white">Aksi</TableHead>
         </TableRow>

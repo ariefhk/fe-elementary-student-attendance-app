@@ -66,8 +66,8 @@ export default function TeacherListClassTable({ classes, isSuccessGetClasses, is
       <TableHeader>
         <TableRow className="bg-color-1   hover:bg-color-1/80">
           <TableHead className="w-[20px] text-white">No</TableHead>
-          <TableHead className="w-[160px] text-white">Nama Kelas</TableHead>
-          <TableHead className="w-[120px] text-white">Jumlah Murid</TableHead>
+          <TableHead className="w-[300px] text-white">Nama Kelas</TableHead>
+          <TableHead className="w-[200px] text-white">Jumlah Murid</TableHead>
           <TableHead className="w-[200px] text-white">Aksi</TableHead>
         </TableRow>
       </TableHeader>

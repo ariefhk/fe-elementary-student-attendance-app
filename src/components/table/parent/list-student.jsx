@@ -1,21 +1,9 @@
-import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { IconButtonLink } from "@/components/common/icon-button-link"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import PropTypes from "prop-types"
-import { MdOutlineVisibility } from "react-icons/md"
-import { Link } from "react-router-dom"
+import { FaEye } from "react-icons/fa6"
 
-function AdminStudentRows({
-  students,
-  isSuccessGetStudents,
-  isLoadingGetStudents,
-}) {
+function AdminStudentRows({ students, isSuccessGetStudents, isLoadingGetStudents }) {
   let tableContent
 
   if (!isLoadingGetStudents && isSuccessGetStudents && students.length > 0) {
@@ -25,16 +13,16 @@ function AdminStudentRows({
           <TableCell className="font-medium">{index + 1}</TableCell>
           <TableCell>{c.nisn || "-"}</TableCell>
           <TableCell>{c.name || "-"}</TableCell>
-          <TableCell>
-            {!c?.gender ? "-" : c.gender === "P" ? "Perempuan" : "Laki-Laki"}
-          </TableCell>
+          <TableCell>{!c?.gender ? "-" : c.gender === "P" ? "Perempuan" : "Laki-Laki"}</TableCell>
           <TableCell>{c.classCount || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
-            <Button asChild>
-              <Link to={`/parent/presence/student/${c.id}/classes`}>
-                Detail Kelas
-              </Link>
-            </Button>
+            <IconButtonLink
+              to={`/parent/presence/student/${c.id}/classes`}
+              name="Daftar Kelas"
+              className="h-11 px-5 w-[150px] gap-x-4 hover:text-color-1 text-white  bg-color-1 hover:bg-white"
+              iconClassName="text-white group-hover:text-color-1 w-5 h-5"
+              Icon={FaEye}
+            />
           </TableCell>
         </TableRow>
       )
@@ -67,11 +55,7 @@ function AdminStudentRows({
   return tableContent
 }
 
-export default function ParentListStudentTable({
-  students,
-  isSuccessGetStudents,
-  isLoadingGetStudents,
-}) {
+export default function ParentListStudentTable({ students, isSuccessGetStudents, isLoadingGetStudents }) {
   return (
     <Table>
       <TableHeader>
