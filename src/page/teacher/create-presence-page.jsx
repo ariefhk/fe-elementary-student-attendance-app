@@ -1,12 +1,9 @@
+import { IconButton } from "@/components/common/icon-button"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Table,
@@ -20,10 +17,7 @@ import {
 import useInput from "@/hook/useInput"
 import { formattedDate } from "@/lib/date"
 import { cn } from "@/lib/utils"
-import {
-  useCreateManyAttendanceMutation,
-  useGetDailyAttendanceQuery,
-} from "@/store/api/attendance-api"
+import { useCreateManyAttendanceMutation, useGetDailyAttendanceQuery } from "@/store/api/attendance-api"
 import {
   clearUpdateAttendance,
   getAttendance,
@@ -51,16 +45,12 @@ const isDisabled = (date) => {
 }
 
 export default function TeacherCreatePresencePage() {
-  const {
-    values: searchStudentByClassValue,
-    onChange: onChangeStudentByClass,
-  } = useInput(initialStudentSearchInput)
+  const { values: searchStudentByClassValue, onChange: onChangeStudentByClass } =
+    useInput(initialStudentSearchInput)
 
   const [date, setDate] = useState(() => {
     const today = new Date()
-    return today.getDay() === 0
-      ? new Date(today.setDate(today.getDate() + 1))
-      : today
+    return today.getDay() === 0 ? new Date(today.setDate(today.getDate() + 1)) : today
   })
   const { classId } = useParams()
 
@@ -84,9 +74,7 @@ export default function TeacherCreatePresencePage() {
   const filteredAttendance = useMemo(() => {
     if (isSuccessGetDailyAttendance) {
       return attendance.filter((attd) => {
-        return attd?.student?.name
-          .toLowerCase()
-          .includes(searchStudentByClassValue?.name?.toLowerCase())
+        return attd?.student?.name.toLowerCase().includes(searchStudentByClassValue?.name?.toLowerCase())
       })
     }
     return []
@@ -145,17 +133,12 @@ export default function TeacherCreatePresencePage() {
     <>
       <div className=" flex justify-between">
         <h1 className="text-fs24_36 font-semibold text-color-1">
-          Absensi Kelas{" "}
-          {isSuccessGetDailyAttendance
-            ? attendanceData?.class?.name
-            : "Loading..."}
+          Absensi Kelas {isSuccessGetDailyAttendance ? attendanceData?.class?.name : "Loading..."}
         </h1>
       </div>
       <div className="flex flex-col gap-y-10">
         <div>
-          <h1 className="pb-5  font-medium text-fs24_36">
-            Guru : {user?.name}
-          </h1>
+          <h1 className="pb-5  font-medium text-fs24_36">Guru : {user?.name}</h1>
           <h1 className="pb-5  font-medium text-fs20_30">
             NIP : {user?.nip ? user?.nip : "Belum dimasukan!"}
           </h1>
@@ -167,14 +150,10 @@ export default function TeacherCreatePresencePage() {
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-[240px] pl-3 text-left font-normal",
+                    "w-[240px] font-roboto h-[45px] font-medium pl-3 text-left ",
                     !date && "text-muted-foreground",
                   )}>
-                  {date ? (
-                    formattedDate(date, true)
-                  ) : (
-                    <span>Pilih Tanggal</span>
-                  )}
+                  {date ? formattedDate(date, true) : <span>Pilih Tanggal</span>}
                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                 </Button>
               </PopoverTrigger>
@@ -193,26 +172,30 @@ export default function TeacherCreatePresencePage() {
                 />
               </PopoverContent>
             </Popover>
-            <div className="flex items-center gap-x-10">
+            <div className="flex items-center gap-x-5">
               <div className="flex items-center gap-x-3">
-                <Button
-                  type="button"
-                  onClick={() => onAllStudentAttendance("ABSENT")}>
-                  Absen Semua
-                </Button>
-                <Button
-                  type="button"
-                  onClick={() => onAllStudentAttendance("PRESENT")}>
-                  Hadir Semua
-                </Button>
-                <Button
-                  type="button"
-                  onClick={() => onAllStudentAttendance("HOLIDAY")}>
-                  Libur Semua
-                </Button>
+                <IconButton
+                  onClick={() => onAllStudentAttendance("ABSENT")}
+                  name="Absen Semua"
+                  className="bg-color-4 font-medium w-[140px] gap-x-3 h-[45px] text-white hover:bg-white hover:text-color-4"
+                  iconClassName="text-white group-hover:text-color-4"
+                />
+                <IconButton
+                  onClick={() => onAllStudentAttendance("PRESENT")}
+                  name="Hadir Semua"
+                  className="bg-color-5 font-medium w-[140px] gap-x-3 h-[45px] text-white hover:bg-white hover:text-color-5"
+                  iconClassName="text-white group-hover:text-color-5"
+                />
+                <IconButton
+                  onClick={() => onAllStudentAttendance("HOLIDAY")}
+                  name="Libur Semua"
+                  className="bg-color-2 font-medium w-[140px] gap-x-3 h-[45px] text-white hover:bg-white hover:text-color-2"
+                  iconClassName="text-white group-hover:text-color-2"
+                />
               </div>
               <div className="max-w-[224px] ">
                 <Input
+                  className="h-[45px]"
                   placeholder="Cari Siswa..."
                   name="name"
                   onChange={onChangeStudentByClass}
@@ -237,55 +220,39 @@ export default function TeacherCreatePresencePage() {
                   return (
                     <TableRow key={index + 1} className="border">
                       <TableCell className="font-medium">{index + 1}</TableCell>
-                      <TableCell className="font-medium">
-                        {attd.student.name}
-                      </TableCell>
-                      <TableCell className="font-medium">
-                        {formattedDate(attd.date, true)}
-                      </TableCell>
+                      <TableCell className="font-medium">{attd.student.name}</TableCell>
+                      <TableCell className="font-medium">{formattedDate(attd.date, true)}</TableCell>
                       <TableCell className="font-medium flex items-center gap-x-2">
-                        <Button
-                          type="button"
-                          onClick={() =>
-                            onStudentAttendance(attd.student.id, "ABSENT")
-                          }
+                        <IconButton
+                          onClick={() => onStudentAttendance(attd.student.id, "ABSENT")}
+                          name="Absen"
                           className={cn(
-                            "bg-white text-black border-2 hover:bg-white",
+                            "bg-white w-[100px] h-[45px] text-black hover:text-white border-2 hover:bg-color-4",
                             {
-                              "bg-color-1 text-white hover:bg-color-1":
-                                attd.status === "ABSENT",
+                              "bg-color-4 text-white ": attd.status === "ABSENT",
                             },
-                          )}>
-                          Absen
-                        </Button>
-                        <Button
-                          type="button"
-                          onClick={() =>
-                            onStudentAttendance(attd.student.id, "PRESENT")
-                          }
+                          )}
+                        />
+                        <IconButton
+                          onClick={() => onStudentAttendance(attd.student.id, "PRESENT")}
+                          name="Hadir"
                           className={cn(
-                            "bg-white text-black border-2 hover:bg-white ",
+                            "bg-white w-[100px] h-[45px] hover:text-white text-black border-2 hover:bg-color-5",
                             {
-                              "bg-color-1 text-white hover:bg-color-1":
-                                attd.status === "PRESENT",
+                              "bg-color-5 text-white ": attd.status === "PRESENT",
                             },
-                          )}>
-                          Hadir
-                        </Button>
-                        <Button
-                          type="button"
-                          onClick={() =>
-                            onStudentAttendance(attd.student.id, "HOLIDAY")
-                          }
+                          )}
+                        />
+                        <IconButton
+                          onClick={() => onStudentAttendance(attd.student.id, "HOLIDAY")}
+                          name="Libur"
                           className={cn(
-                            "bg-white text-black border-2 hover:bg-white",
+                            "bg-white w-[100px] hover:text-white h-[45px] text-black border-2 hover:bg-color-2",
                             {
-                              "bg-color-1 text-white hover:bg-color-1":
-                                attd.status === "HOLIDAY",
+                              "bg-color-2 text-white ": attd.status === "HOLIDAY",
                             },
-                          )}>
-                          Libur
-                        </Button>
+                          )}
+                        />
                       </TableCell>
                     </TableRow>
                   )
@@ -293,15 +260,18 @@ export default function TeacherCreatePresencePage() {
             </TableBody>
             <TableFooter className="border">
               <TableRow>
-                <TableCell colSpan={4} className="text-right">
-                  <Button
-                    disabled={updatedAttendance?.length === 0}
-                    type="button"
-                    onClick={async () => {
-                      await onSaveUpdateAttendance()
-                    }}>
-                    Simpan Perubahan
-                  </Button>
+                <TableCell colSpan={4}>
+                  <div className="flex justify-end">
+                    <IconButton
+                      isDisabled={updatedAttendance?.length === 0}
+                      onClick={async () => {
+                        await onSaveUpdateAttendance()
+                      }}
+                      name="Simpan Perubahan"
+                      className="bg-color-1 font-medium w-[200px] gap-x-3 h-[45px] text-white hover:bg-white hover:text-color-1"
+                      iconClassName="text-white group-hover:text-color-4"
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             </TableFooter>

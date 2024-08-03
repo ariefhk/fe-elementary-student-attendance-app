@@ -16,13 +16,15 @@ function TeacherClassRows({ classes, isSuccessGetClasses, isLoadingGetClasses })
           <TableCell className="flex gap-x-2">
             <IconButtonLink
               to={`/teacher/class/${c.id}/presence`}
-              className="h-11 px-5 w-12  bg-color-1 hover:bg-white"
+              name="Absensi"
+              className="h-11 px-5 w-[150px] gap-x-4 hover:text-color-1 text-white  bg-color-1 hover:bg-white"
               iconClassName="text-white group-hover:text-color-1 w-5 h-5"
               Icon={FaUsersLine}
             />
             <IconButtonLink
               to={`/teacher/class/${c.id}/detail`}
-              className="h-11 px-5 w-12  bg-color-1 hover:bg-white"
+              name="Detail Kelas"
+              className="h-11 px-5 w-[150px] gap-x-4 hover:text-color-1 text-white  bg-color-1 hover:bg-white"
               iconClassName="text-white group-hover:text-color-1 w-5 h-5"
               Icon={FaEye}
             />
