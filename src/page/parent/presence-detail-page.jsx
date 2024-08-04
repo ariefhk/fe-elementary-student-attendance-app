@@ -105,18 +105,21 @@ export default function ParentPresentDetailPage() {
   return (
     <>
       <div className=" flex justify-between">
-        <h1 className="text-fs24_36 font-semibold text-color-1">Absensi Kelas</h1>
+        <h1 className="text-fs30_40 font-semibold text-color-1">Absensi Kelas</h1>
       </div>
       <div className="space-y-8">
-        <div className="flex flex-col gap-y-5 ">
+        <div className="flex flex-col gap-y-10 ">
           <div>
-            <h1 className="pb-5  font-medium text-fs24_36">Orang Tua : {user?.name}</h1>
-            <div>
-              <h1 className="pb-5  font-medium text-fs20_30">
+            <div className="space-y-3">
+              <h1 className="  font-medium text-fs24_36">Orang Tua : {user?.name}</h1>
+              <h1 className=" font-medium text-fs18_20">
                 Anak : {isSuccessGetStudent ? student?.name : "Belum dimasukan!"}
               </h1>
-              <h1 className="pb-5  font-medium text-fs20_30">
+              <h1 className="  font-medium text-fs18_20">
                 Kelas : {isSuccessGetClasses ? classes?.name : "Belum dimasukan!"}
+              </h1>
+              <h1 className="  font-medium text-fs18_20">
+                Guru : {isSuccessGetClasses ? classes?.teacher?.name : "Belum dimasukan!"}
               </h1>
             </div>
           </div>

@@ -24,19 +24,23 @@ export default function ParentPresenceListClassPage() {
     studentId,
   })
 
-  console.log("classesByStudent", classesByStudent)
-
   return (
     <>
       <div className=" flex justify-between">
-        <h1 className="text-fs24_36 font-semibold text-color-1"> Pilih Kelas Anak Anda</h1>
+        <h1 className="text-fs30_40 font-semibold text-color-1"> Pilih Kelas Anak Anda</h1>
       </div>
       <div className="space-y-8">
         <div className="flex flex-col gap-y-3 ">
-          <div>
-            <h1 className="pb-5  font-medium text-fs24_36">Orang Tua : {user?.name}</h1>
-            <h1 className="pb-5  font-medium text-fs20_30">
+          <div className="space-y-3">
+            <h1 className="  font-medium text-fs24_36">Orang Tua : {user?.name}</h1>
+            <h1 className=" font-medium text-fs18_20">
               Anak : {classesByStudent?.student?.name ? classesByStudent?.student?.name : "Belum dimasukan!"}
+            </h1>
+            <h1 className=" font-medium text-fs18_20">
+              Jumlah Kelas :{" "}
+              {isSuccessGetClassesByStudent
+                ? classesByStudent?.classes?.length
+                : "Belum dimasukan ke kelas manapun!"}
             </h1>
           </div>
           <div className="flex justify-end items-center">

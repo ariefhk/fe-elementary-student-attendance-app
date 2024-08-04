@@ -2,9 +2,7 @@ import { IconButton } from "@/components/common/icon-button"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Table,
   TableBody,
@@ -111,6 +109,7 @@ export default function TeacherCreatePresencePage() {
         dispatch(clearUpdateAttendance())
       })
     } catch (error) {
+      console.log(error)
       Swal.fire({
         icon: "error",
         title: "Gagal Simpan Absensi!!",
@@ -122,12 +121,6 @@ export default function TeacherCreatePresencePage() {
       })
     }
   }
-
-  // console.log({
-  //   isLoadingGetDailyAttendance,
-  //   attendance,
-  //   updatedAttendance,
-  // })
 
   return (
     <>

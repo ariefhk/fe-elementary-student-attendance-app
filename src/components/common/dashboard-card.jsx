@@ -9,13 +9,13 @@ export default function DashboardCard({ className, icon, name, to }) {
     <Link
       to={to}
       className={cn(
-        "border p-5 flex-shrink-0  flex items-center gap-x-5 shadow-lg rounded-[10px] w-full cursor-pointer max-w-[200px]",
+        "border p-5 flex-shrink-0  font-roboto flex items-center gap-x-5 shadow-lg rounded-[10px] w-full cursor-pointer max-w-[200px]",
         className,
       )}>
       {
         <>
           <Icon className="w-10 h-10  text-white" />
-          <span className="text-txt18_20 font-medium">{name}</span>
+          <span className="text-fs18_20 font-medium">{name}</span>
         </>
       }
     </Link>

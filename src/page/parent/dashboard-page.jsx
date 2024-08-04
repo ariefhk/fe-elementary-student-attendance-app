@@ -9,11 +9,10 @@ export default function ParentDashboardPage() {
 
   return (
     <>
-      <div className="space-y-5">
-        <h1 className="text-txt24_36 font-semibold text-color-1">
-          Selamat Datang{" "}
-          <span className="underline underline-offset-4">{user?.name}</span>!
-          Anda Telah Login Sebagai Orang Tua
+      <div className="space-y-5 font-roboto">
+        <h1 className="text-fs24_36 font-semibold text-color-1">
+          Selamat Datang <span className="underline underline-offset-4">{user?.name}</span>! Anda Telah Login
+          Sebagai Orang Tua
         </h1>
         <DashboardHeader />
       </div>

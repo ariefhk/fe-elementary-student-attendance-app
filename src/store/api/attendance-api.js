@@ -115,7 +115,7 @@ export const attendanceApi = protectedApiEndpoint.injectEndpoints({
       query: (args) => {
         return {
           url: `attendance/class/${args?.classId}/update-attendance`,
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },

@@ -8,7 +8,7 @@ export default function ParentLayout() {
   return (
     <>
       <TopLoadingBar />
-      <div className="flex h-screen font-poppins flex-col md:flex-row md:overflow-hidden">
+      <div className="flex  h-screen font-poppins flex-col md:flex-row md:overflow-hidden">
         <div className="w-full flex-none md:w-64 h-full hidden md:block ">
           <DashboardNavlink dashLinks={parentNavLink} />
         </div>

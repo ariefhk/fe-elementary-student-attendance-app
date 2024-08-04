@@ -13,6 +13,7 @@ import AdminProfilePage from "@/page/admin/profile-page"
 import LoginPage from "@/page/auth/login-page"
 import GuestNotFoundPage from "@/page/not-found/not-found-page"
 import ParentDashboardPage from "@/page/parent/dashboard-page"
+import ParentDetailClassPage from "@/page/parent/detail-class-page"
 import ParentPresentDetailPage from "@/page/parent/presence-detail-page"
 import ParentPresenceListClassPage from "@/page/parent/presence-list-class-page"
 import ParentPresencePage from "@/page/parent/presence-page"
@@ -41,10 +42,7 @@ export default function AppRouter() {
         <Route path="user/teacher" element={<AdminListTeacherPage />} />
         <Route path="user/parent" element={<AdminListParentPage />} />
         <Route path="class" element={<AdminListClassPage />} />
-        <Route
-          path="class/:classId/detail"
-          element={<AdminDetailClassPage />}
-        />
+        <Route path="class/:classId/detail" element={<AdminDetailClassPage />} />
         <Route path="student" element={<AdminListStudentPage />} />
       </Route>
       {/* Admin */}
@@ -53,22 +51,10 @@ export default function AppRouter() {
         <Route index element={<TeacherDashboardPage />} />
         <Route path="profile" element={<TeacherProfilePage />} />
         <Route path="class" element={<TeacherListClassPage />} />
-        <Route
-          path="class/:classId/detail"
-          element={<TeacherDetailClassPage />}
-        />
-        <Route
-          path="class/:classId/detail"
-          element={<TeacherDetailClassPage />}
-        />
-        <Route
-          path="class/:classId/presence"
-          element={<TeacherClassPresencePage />}
-        />
-        <Route
-          path="class/:classId/presence/create"
-          element={<TeacherCreatePresencePage />}
-        />
+        <Route path="class/:classId/detail" element={<TeacherDetailClassPage />} />
+        <Route path="class/:classId/detail" element={<TeacherDetailClassPage />} />
+        <Route path="class/:classId/presence" element={<TeacherClassPresencePage />} />
+        <Route path="class/:classId/presence/create" element={<TeacherCreatePresencePage />} />
       </Route>
       {/* Teacher */}
       {/* Parent */}
@@ -76,13 +62,14 @@ export default function AppRouter() {
         <Route index element={<ParentDashboardPage />} />
         <Route path="profile" element={<ParentProfilePage />} />
         <Route path="presence" element={<ParentPresencePage />} />
-        <Route
-          path="presence/student/:studentId/classes"
-          element={<ParentPresenceListClassPage />}
-        />
+        <Route path="presence/student/:studentId/classes" element={<ParentPresenceListClassPage />} />
         <Route
           path="presence/student/:studentId/classes/:classId/detail-presence"
           element={<ParentPresentDetailPage />}
+        />
+        <Route
+          path="presence/student/:studentId/classes/:classId/detail-class"
+          element={<ParentDetailClassPage />}
         />
       </Route>
       {/* Parent */}
