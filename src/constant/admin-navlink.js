@@ -1,9 +1,4 @@
-import {
-  FaChalkboardTeacher,
-  FaUser,
-  FaUserGraduate,
-  FaUsers,
-} from "react-icons/fa"
+import { FaChalkboardTeacher, FaUser, FaUserGraduate, FaUsers } from "react-icons/fa"
 import { HiOutlineHome, HiOutlineUserCircle } from "react-icons/hi"
 
 export const adminDashboardIcons = [
@@ -26,7 +21,14 @@ export const adminDashboardIcons = [
     name: "Kelas",
     className: "bg-color-4 hover:bg-color-4/60 text-white",
     icon: FaChalkboardTeacher,
-    href: "admin/class",
+    href: "/admin/class",
+  },
+  {
+    id: 4,
+    name: "Siswa",
+    className: "bg-color-5 hover:bg-color-5/60 text-white",
+    icon: FaUserGraduate,
+    href: "/admin/student",
   },
 ]
 

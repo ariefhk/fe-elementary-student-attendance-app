@@ -10,10 +10,9 @@ export default function AdminDashboardPage() {
   return (
     <>
       <div className="space-y-5">
-        <h1 className="text-txt24_36 font-semibold text-color-1">
-          Selamat Datang{" "}
-          <span className="underline underline-offset-4">{user?.name}</span>!
-          Anda Telah Login Sebagai Admin
+        <h1 className="text-fs24_36 font-semibold text-color-1">
+          Selamat Datang <span className="underline underline-offset-4">{user?.name}</span>! Anda Telah Login
+          Sebagai Admin
         </h1>
         <DashboardHeader />
       </div>
