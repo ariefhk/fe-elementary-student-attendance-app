@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
+import { getImageURL } from "@/lib/getImageUrl"
 import { useDeleteParentMutation } from "@/store/api/parent-api"
 import PropTypes from "prop-types"
 import { BsArrowRepeat } from "react-icons/bs"
@@ -61,7 +62,9 @@ export default function AdminDeleteParentDialog({ open = false, onOpenChange, pa
             <div className="mt-4 grid gap-2">
               <div className="flex justify-center py-2 items-center">
                 <img
-                  src={parent?.profilePicture ? parent.profilePicture : IMAGE_PLACEHOLDER(120, 120)}
+                  src={
+                    parent?.profilePicture ? getImageURL(parent.profilePicture) : IMAGE_PLACEHOLDER(120, 120)
+                  }
                   alt="Profile"
                   className="w-[120px] h-[120px] flex-shrink-0 rounded-full object-cover"
                 />

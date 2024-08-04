@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { GENDER } from "@/constant/gender"
 import usePreviewImage, { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
+import { getImageURL } from "@/lib/getImageUrl"
 import { useUpdateParentMutation } from "@/store/api/parent-api"
 import PropTypes from "prop-types"
 import { useEffect } from "react"
@@ -55,7 +56,7 @@ export default function AdminEditParentDialog({ open = false, onOpenChange, pare
       address: parent?.address ?? "",
     })
     if (parent?.profilePicture) {
-      onSetPreviewProfilePicture(parent.profilePicture)
+      onSetPreviewProfilePicture(getImageURL(parent.profilePicture))
     }
   }, [form, parent, onSetPreviewProfilePicture])
 

@@ -17,14 +17,7 @@ export const parentApi = protectedApiEndpoint.injectEndpoints({
         const parents = response?.data
         return parents
       },
-      providesTags: (result) => {
-        return result
-          ? [
-              ...result.map(({ id }) => ({ type: "PARENT", id })),
-              { type: "PARENT", id: "LIST_OF_PARENT" },
-            ]
-          : [{ type: "PARENT", id: "LIST_OF_PARENT" }]
-      },
+      providesTags: () => [{ type: "PARENT", id: "LIST_OF_PARENT" }],
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         dispatch(showLoading())
         try {
@@ -36,20 +29,21 @@ export const parentApi = protectedApiEndpoint.injectEndpoints({
       },
     }),
     createParent: builder.mutation({
-      query: (args) => ({
-        url: `parent`,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
-          name: args?.name,
-          email: args?.email,
-          password: args?.password,
-          photo: args?.photo,
-          address: args?.address,
-        },
-      }),
+      query: (args) => {
+        const createParentFormData = new FormData()
+        args?.email && createParentFormData.append("email", args.email)
+        args?.password && createParentFormData.append("password", args.password)
+        args?.profilePicture && createParentFormData.append("profilePicture", args.profilePicture)
+        args?.gender && createParentFormData.append("gender", args.gender)
+        args?.name && createParentFormData.append("name", args.name)
+        args?.address && createParentFormData.append("address", args.address)
+        return {
+          url: `parent`,
+          method: "POST",
+          formData: true,
+          body: createParentFormData,
+        }
+      },
       transformResponse: (response) => {
         const parent = response.data
         return parent
@@ -57,20 +51,21 @@ export const parentApi = protectedApiEndpoint.injectEndpoints({
       invalidatesTags: () => [{ type: "PARENT", id: "LIST_OF_PARENT" }],
     }),
     updateParent: builder.mutation({
-      query: (args) => ({
-        url: `parent/${args?.parentId}`,
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: {
-          name: args?.name,
-          email: args?.email,
-          password: args?.password,
-          photo: args?.photo,
-          address: args?.address,
-        },
-      }),
+      query: (args) => {
+        const updateParentFormData = new FormData()
+        args?.email && updateParentFormData.append("email", args.email)
+        args?.password && updateParentFormData.append("password", args.password)
+        args?.profilePicture && updateParentFormData.append("profilePicture", args.profilePicture)
+        args?.gender && updateParentFormData.append("gender", args.gender)
+        args?.name && updateParentFormData.append("name", args.name)
+        args?.address && updateParentFormData.append("address", args.address)
+        return {
+          url: `parent/${args?.parentId}`,
+          method: "PUT",
+          formData: true,
+          body: updateParentFormData,
+        }
+      },
       transformResponse: (response) => {
         const parent = response.data
         return parent
