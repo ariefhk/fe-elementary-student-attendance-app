@@ -10,19 +10,14 @@ import {
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
+import { getImageURL } from "@/lib/getImageUrl"
 import { useDeleteTeacherMutation } from "@/store/api/teacher-api"
 import PropTypes from "prop-types"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
-export default function AdminDeleteTeacherDialog({
-  open = false,
-  onOpenChange,
-  teacher,
-  onClose,
-}) {
-  const [deleteTeacher, { isLoading: isLoadingDeleteTeacher }] =
-    useDeleteTeacherMutation()
+export default function AdminDeleteTeacherDialog({ open = false, onOpenChange, teacher, onClose }) {
+  const [deleteTeacher, { isLoading: isLoadingDeleteTeacher }] = useDeleteTeacherMutation()
 
   async function onDeleteTeacher() {
     try {
@@ -54,8 +49,8 @@ export default function AdminDeleteTeacherDialog({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="font-roboto px-0 max-w-[460px]">
         <AlertDialogDescription className="sr-only">
-          This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
+          This action cannot be undone. This will permanently delete your account and remove your data from
+          our servers.
         </AlertDialogDescription>
         <AlertDialogHeader className="px-8">
           <AlertDialogTitle className="text-color-1 text-[24px] font-semibold text-center">
@@ -63,15 +58,13 @@ export default function AdminDeleteTeacherDialog({
           </AlertDialogTitle>
           <Separator />
           <div>
-            <span className="font-bold">
-              Apakah Anda yakin ingin menghapus Guru ?
-            </span>
+            <span className="font-bold">Apakah Anda yakin ingin menghapus Guru ?</span>
             <div className="mt-4 grid gap-2">
               <div className="flex justify-center py-2 items-center">
                 <img
                   src={
                     teacher?.profilePicture
-                      ? teacher.profilePicture
+                      ? getImageURL(teacher?.profilePicture)
                       : IMAGE_PLACEHOLDER(120, 120)
                   }
                   alt="Profile"
@@ -115,9 +108,7 @@ export default function AdminDeleteTeacherDialog({
               await onDeleteTeacher()
             }}
             className="bg-color-4 text-white hover:text-white hover:bg-color-4/60 gap-x-2 flex items-center">
-            {isLoadingDeleteTeacher && (
-              <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />
-            )}{" "}
+            {isLoadingDeleteTeacher && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />}{" "}
             Hapus
           </Button>
         </AlertDialogFooter>

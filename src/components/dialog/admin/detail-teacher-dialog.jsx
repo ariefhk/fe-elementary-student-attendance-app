@@ -10,20 +10,16 @@ import {
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
+import { getImageURL } from "@/lib/getImageUrl"
 import PropTypes from "prop-types"
 
-export default function AdminDetailTeacherDialog({
-  open = false,
-  onOpenChange,
-  teacher,
-  onClose,
-}) {
+export default function AdminDetailTeacherDialog({ open = false, onOpenChange, teacher, onClose }) {
   return (
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="font-roboto px-0 max-w-[460px]">
         <AlertDialogDescription className="sr-only">
-          This action cannot be undone. This will permanently delete your
-          account and remove your data from our servers.
+          This action cannot be undone. This will permanently delete your account and remove your data from
+          our servers.
         </AlertDialogDescription>
         <AlertDialogHeader className="px-8">
           <AlertDialogTitle className="text-color-1 text-[24px] font-semibold text-center">
@@ -34,9 +30,7 @@ export default function AdminDetailTeacherDialog({
             <div className="flex justify-center py-2 items-center">
               <img
                 src={
-                  teacher?.profilePicture
-                    ? teacher.profilePicture
-                    : IMAGE_PLACEHOLDER(120, 120)
+                  teacher?.profilePicture ? getImageURL(teacher?.profilePicture) : IMAGE_PLACEHOLDER(120, 120)
                 }
                 alt="Profile"
                 className="w-[120px] h-[120px] flex-shrink-0 rounded-full object-cover"

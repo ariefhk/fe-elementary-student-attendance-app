@@ -5,7 +5,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 // Utility function to prepare headers
 const prepareAuthHeaders = (headers) => {
   const token = getLocalStorageData(LOCALSTORAGE.USER)?.token
-  console.log("current token: ", token)
   if (token) {
     headers.set("Authorization", `Bearer ${token}`)
   }
@@ -16,7 +15,7 @@ const prepareAuthHeaders = (headers) => {
 export const apiEndpoint = createApi({
   reducerPath: "PUBLIC_ENDPOINT",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env?.VITE_BASE_URL,
+    baseUrl: import.meta.env?.VITE_BASE_API_URL,
   }),
   endpoints: () => ({}),
 })
@@ -25,17 +24,9 @@ export const apiEndpoint = createApi({
 export const protectedApiEndpoint = createApi({
   reducerPath: "PROTECTED_ENDPOINT",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env?.VITE_BASE_URL,
+    baseUrl: import.meta.env?.VITE_BASE_API_URL,
     prepareHeaders: prepareAuthHeaders,
-    tagTypes: [
-      "AUTH",
-      "USER",
-      "TEACHER",
-      "PARENT",
-      "CLASS",
-      "STUDENT",
-      "ATTENDANCE",
-    ],
+    tagTypes: ["AUTH", "USER", "TEACHER", "PARENT", "CLASS", "STUDENT", "ATTENDANCE"],
   }),
   endpoints: () => ({}),
 })

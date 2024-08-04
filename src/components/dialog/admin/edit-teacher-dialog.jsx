@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { GENDER } from "@/constant/gender"
 import usePreviewImage, { IMAGE_PLACEHOLDER } from "@/hook/usePreviewImage"
+import { getImageURL } from "@/lib/getImageUrl"
 import { useUpdateTeacherMutation } from "@/store/api/teacher-api"
 import PropTypes from "prop-types"
 import { useEffect } from "react"
@@ -58,7 +59,7 @@ export default function AdminEditTeacherDialog({ open = false, onOpenChange, tea
     })
 
     if (teacher?.profilePicture) {
-      onSetPreviewProfilePicture(teacher.profilePicture)
+      onSetPreviewProfilePicture(getImageURL(teacher.profilePicture))
     }
   }, [form, teacher, onSetPreviewProfilePicture])
 
@@ -73,7 +74,6 @@ export default function AdminEditTeacherDialog({ open = false, onOpenChange, tea
       name: values.name,
       address: values.address,
     }
-    // console.log(updatedData)
     try {
       await updateTeacher(updatedData).unwrap()
 

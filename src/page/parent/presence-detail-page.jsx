@@ -102,13 +102,6 @@ export default function ParentPresentDetailPage() {
       },
     )
 
-  console.log({
-    studentId,
-    student,
-    classId,
-    classes,
-  })
-
   return (
     <>
       <div className=" flex justify-between">
