@@ -20,7 +20,8 @@ import { Form, FormField, FormItem, FormLabel, FormMessage } from "@/components/
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Separator } from "@/components/ui/separator"
 import { cn } from "@/lib/utils"
-import { useFindAllStudentQuery, useSetStudentToClassMutation } from "@/store/api/student-api"
+import { useAddStudentToClassMutation } from "@/store/api/class-api"
+import { useFindAllStudentQuery } from "@/store/api/student-api"
 import { Check, ChevronsUpDown } from "lucide-react"
 import PropTypes from "prop-types"
 import { useState } from "react"
@@ -29,7 +30,8 @@ import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
 
 export default function AdminAddStudentToClassDialog({ open = false, onOpenChange, onClose, classes }) {
-  const [setStudentToClass, { isLoading: isLoadingSetStudentToClass }] = useSetStudentToClassMutation()
+  const [addStudentToClass, { isLoading: isLoadingAddStudentToClass }] = useAddStudentToClassMutation()
+
   const [openStudentList, setOpenStudentList] = useState(false)
 
   const {
@@ -54,7 +56,7 @@ export default function AdminAddStudentToClassDialog({ open = false, onOpenChang
     }
     // console.log(createStudentData)
     try {
-      const result = await setStudentToClass(createStudentData).unwrap()
+      const result = await addStudentToClass(createStudentData).unwrap()
       form.reset()
       onOpenChange(false)
       Swal.fire({
@@ -168,11 +170,11 @@ export default function AdminAddStudentToClassDialog({ open = false, onOpenChang
             </Button>
           </AlertDialogCancel>
           <Button
-            disabled={isLoadingSetStudentToClass || !isFormValueChanged}
+            disabled={isLoadingAddStudentToClass || !isFormValueChanged}
             form="add-student-to-class-form"
             type="submit"
             className="bg-color-5 hover:bg-color-5/60 text-white gap-x-2 flex items-center">
-            {isLoadingSetStudentToClass && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />}{" "}
+            {isLoadingAddStudentToClass && <BsArrowRepeat className="animate-spin  w-5 h-5 flex-shrink-0" />}{" "}
             Simpan
           </Button>
         </AlertDialogFooter>

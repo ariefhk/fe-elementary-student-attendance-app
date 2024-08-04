@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { useRemoveStudentFromClassMutation } from "@/store/api/student-api"
+import { useRemoveStudentFromClassMutation } from "@/store/api/class-api"
 import PropTypes from "prop-types"
 import { BsArrowRepeat } from "react-icons/bs"
 import Swal from "sweetalert2"
@@ -88,7 +88,7 @@ export default function AdminDeleteStudentFromClassDialog({
           </div>
         </AlertDialogHeader>
         <Separator />
-        <AlertDialogFooter>
+        <AlertDialogFooter className="px-8">
           <AlertDialogCancel asChild>
             <Button
               type="button"

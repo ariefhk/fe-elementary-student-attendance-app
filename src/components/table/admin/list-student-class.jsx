@@ -1,34 +1,19 @@
 import { Button } from "@/components/ui/button"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import PropTypes from "prop-types"
 import { FaRegTrashAlt } from "react-icons/fa"
 
-function AdminStudentByClassRows({
-  students,
-  isSuccessGetStudents,
-  isLoadingGetStudents,
-  onDeleteStudent,
-}) {
+function AdminStudentByClassRows({ students, isSuccessGetStudents, isLoadingGetStudents, onDeleteStudent }) {
   let tableContent
 
   if (!isLoadingGetStudents && isSuccessGetStudents && students.length > 0) {
     tableContent = students.map((c, index) => {
-      console.log(c)
       return (
         <TableRow className="border" key={index + 1}>
           <TableCell className="font-medium">{index + 1}</TableCell>
           <TableCell>{c?.nisn || "-"}</TableCell>
           <TableCell>{c?.name || "-"}</TableCell>
-          <TableCell>
-            {!c?.gender ? "-" : c?.gender === "P" ? "Perempuan" : "Laki-Laki"}
-          </TableCell>
+          <TableCell>{!c?.gender ? "-" : c?.gender === "P" ? "Perempuan" : "Laki-Laki"}</TableCell>
           <TableCell>{c?.parent?.name || "-"}</TableCell>
           <TableCell className="flex gap-x-2">
             <Button

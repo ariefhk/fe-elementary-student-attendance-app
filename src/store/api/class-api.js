@@ -17,11 +17,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         const classes = response?.data
         return classes
       },
-      providesTags: (result) => {
-        return result
-          ? [...result.map(({ id }) => ({ type: "CLASS", id })), { type: "CLASS", id: "LIST_OF_CLASS" }]
-          : [{ type: "CLASS", id: "LIST_OF_CLASS" }]
-      },
+      providesTags: () => [{ type: "CLASS", id: "LIST_OF_CLASS" }],
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         dispatch(showLoading())
         try {
@@ -32,6 +28,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+
     findClassById: builder.query({
       query: (args) => {
         return {
@@ -46,17 +43,8 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         const classesDetailWithStudent = response?.data
         return classesDetailWithStudent
       },
-      providesTags: (result) => {
-        return result?.students?.length > 0
-          ? [
-              ...result.students.map(({ id }) => ({
-                type: "CLASS",
-                id: `${id}_STUDENT_BY_CLASS`,
-              })),
-              { type: "CLASS", id: "LIST_OF_STUDENT_BY_CLASS" },
-            ]
-          : [{ type: "CLASS", id: "LIST_OF_STUDENT_BY_CLASS" }]
-      },
+
+      providesTags: () => [{ type: "CLASS", id: "CLASS_BY_ID" }],
       async onQueryStarted(_args, { dispatch, queryFulfilled }) {
         dispatch(showLoading())
         try {
@@ -117,6 +105,7 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+
     createClass: builder.mutation({
       query: (args) => ({
         url: `class`,
@@ -133,7 +122,12 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
         const classes = response.data
         return classes
       },
-      invalidatesTags: () => [{ type: "CLASS", id: "LIST_OF_CLASS" }],
+      invalidatesTags: () => [
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+        { type: "CLASS", id: "CLASS_BY_ID" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_STUDENT" },
+      ],
     }),
 
     updateClass: builder.mutation({
@@ -154,9 +148,13 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [
         { type: "CLASS", id: "LIST_OF_CLASS" },
+        { type: "CLASS", id: "CLASS_BY_ID" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_STUDENT" },
         { type: "STUDENT", id: "LIST_OF_STUDENT" },
       ],
     }),
+
     deleteClass: builder.mutation({
       query: (args) => ({
         url: `class/${args?.classId}`,
@@ -170,13 +168,62 @@ export const classApi = protectedApiEndpoint.injectEndpoints({
       },
       invalidatesTags: () => [
         { type: "CLASS", id: "LIST_OF_CLASS" },
+        { type: "CLASS", id: "CLASS_BY_ID" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_STUDENT" },
         { type: "STUDENT", id: "LIST_OF_STUDENT" },
+      ],
+    }),
+
+    addStudentToClass: builder.mutation({
+      query: (args) => ({
+        url: `class/${args?.classId}/student/${args.studentId}/add`,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      transformResponse: (response) => {
+        const addStudentToClass = response.data
+        return addStudentToClass
+      },
+      invalidatesTags: () => [
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+        { type: "CLASS", id: "CLASS_BY_ID" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_STUDENT" },
+        { type: "STUDENT", id: "LIST_OF_STUDENT" },
+        { type: "STUDENT", id: "LIST_OF_STUDENT_INSIDE_CLASS" },
+      ],
+    }),
+
+    removeStudentFromClass: builder.mutation({
+      query: (args) => ({
+        url: `class/${args?.classId}/student/${args.studentId}/remove`,
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }),
+      transformResponse: (response) => {
+        const removeStudentFromClass = response.data
+        return removeStudentFromClass
+      },
+      invalidatesTags: () => [
+        { type: "CLASS", id: "LIST_OF_CLASS" },
+        { type: "CLASS", id: "CLASS_BY_ID" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_TEACHER" },
+        { type: "CLASS", id: "LIST_OF_CLASS_BY_STUDENT" },
+        { type: "STUDENT", id: "LIST_OF_STUDENT" },
+        { type: "STUDENT", id: "LIST_OF_STUDENT_INSIDE_CLASS" },
       ],
     }),
   }),
 })
 
 export const {
+  useAddStudentToClassMutation,
+  useRemoveStudentFromClassMutation,
   useFindClassByStudentIdQuery,
   useFindClassByIdQuery,
   useFindClassByTeacherIdQuery,
