@@ -53,6 +53,6 @@ ProfileCard.propTypes = {
   nip: PropTypes.string,
   profilePicture: PropTypes.string,
   email: PropTypes.string,
-  phoneNumber: PropTypes,
+  phoneNumber: PropTypes.string,
   gender: PropTypes.string,
 }

@@ -1,4 +1,5 @@
 import { hideLoading, showLoading } from "react-redux-loading-bar"
+import { setUser } from "../slice/user-slice"
 import { protectedApiEndpoint } from "./instance"
 
 export const userApi = protectedApiEndpoint.injectEndpoints({
@@ -22,7 +23,47 @@ export const userApi = protectedApiEndpoint.injectEndpoints({
         dispatch(hideLoading())
       },
     }),
+
+    updateCurrentUser: builder.mutation({
+      query: (args) => {
+        const updateCurrentUserFormData = new FormData()
+        args?.email && updateCurrentUserFormData.append("email", args.email)
+        args?.password && updateCurrentUserFormData.append("password", args.password)
+        args?.profilePicture && updateCurrentUserFormData.append("profilePicture", args.profilePicture)
+        args?.gender && updateCurrentUserFormData.append("gender", args.gender)
+        args?.name && updateCurrentUserFormData.append("name", args.name)
+        args?.address && updateCurrentUserFormData.append("address", args.address)
+        return {
+          url: `auth/me/update`,
+          method: "PUT",
+          formData: true,
+          body: updateCurrentUserFormData,
+        }
+      },
+      transformResponse: (response) => {
+        const updatedUser = response.data
+        return updatedUser
+      },
+      async onQueryStarted(_args, { dispatch, getState, queryFulfilled }) {
+        dispatch(showLoading())
+
+        try {
+          const { data: user } = await queryFulfilled
+          const token = getState()?.user?.user?.token
+
+          const updatedUser = {
+            token: token,
+            ...user,
+          }
+
+          dispatch(setUser(updatedUser))
+        } catch (error) {
+          console.log("LOGG ERROR ON QUERYSTARTED UPDATE USER: ", error)
+        }
+        dispatch(hideLoading())
+      },
+    }),
   }),
 })
 
-export const { useLogoutUserMutation } = userApi
+export const { useLogoutUserMutation, useUpdateCurrentUserMutation } = userApi
