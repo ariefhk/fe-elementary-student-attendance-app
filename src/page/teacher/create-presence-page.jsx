@@ -125,7 +125,7 @@ export default function TeacherCreatePresencePage() {
   return (
     <>
       <div className=" flex justify-between">
-        <h1 className="text-fs24_36 font-semibold text-color-1">
+        <h1 className="text-fs30_40 font-semibold text-color-1">
           Absensi Kelas {isSuccessGetDailyAttendance ? attendanceData?.class?.name : "Loading..."}
         </h1>
       </div>

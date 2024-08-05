@@ -9,10 +9,9 @@ export default function TeacherDashboardPage() {
   return (
     <>
       <div className="space-y-5">
-        <h1 className="text-txt24_36 font-semibold text-color-1">
-          Selamat Datang{" "}
-          <span className="underline underline-offset-4">{user?.name}</span>!
-          Anda Telah Login Sebagai Guru
+        <h1 className="text-fs24_36 font-semibold text-color-1">
+          Selamat Datang <span className="underline underline-offset-4">{user?.name}</span>! Anda Telah Login
+          Sebagai Guru
         </h1>
         <DashboardHeader />
       </div>

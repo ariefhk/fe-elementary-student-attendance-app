@@ -80,7 +80,7 @@ export default function TeacherClassPresencePage() {
   return (
     <>
       <div className=" flex justify-between">
-        <h1 className="text-fs24_36 font-semibold text-color-1">
+        <h1 className="text-fs30_40 font-semibold text-color-1">
           Absensi Kelas {isSuccessGetWeeklyAttendance ? weeklyAttendance?.class?.name : "Loading..."}
         </h1>
       </div>
@@ -253,7 +253,7 @@ export default function TeacherClassPresencePage() {
                 filteredStudent?.length > 0 &&
                 filteredStudent.map((student, index) => {
                   return (
-                    <TableRow key={index + 1} className="border]">
+                    <TableRow key={index + 1} className="border">
                       <TableCell className="font-medium">{index + 1}</TableCell>
                       <TableCell className="font-medium ">{student.name}</TableCell>
                       {student?.attendance?.map((attd, index) => {

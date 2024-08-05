@@ -1,18 +1,7 @@
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import PropTypes from "prop-types"
 
-function TeacherStudentByClassRows({
-  students,
-  isSuccessGetStudents,
-  isLoadingGetStudents,
-}) {
+function TeacherStudentByClassRows({ students, isSuccessGetStudents, isLoadingGetStudents }) {
   let tableContent
 
   if (!isLoadingGetStudents && isSuccessGetStudents && students.length > 0) {
@@ -23,21 +12,8 @@ function TeacherStudentByClassRows({
           <TableCell className="font-medium">{index + 1}</TableCell>
           <TableCell>{c?.nisn || "-"}</TableCell>
           <TableCell>{c?.name || "-"}</TableCell>
-          <TableCell>
-            {!c?.gender ? "-" : c?.gender === "P" ? "Perempuan" : "Laki-Laki"}
-          </TableCell>
+          <TableCell>{!c?.gender ? "-" : c?.gender === "P" ? "Perempuan" : "Laki-Laki"}</TableCell>
           <TableCell>{c?.parent?.name || "-"}</TableCell>
-          {/* <TableCell className="flex gap-x-2">
-            <Button
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                onDeleteStudent(c)
-              }}
-              variant="destructive">
-              <FaRegTrashAlt className="flex-shrink-0 w-5 h-5" />
-            </Button>
-          </TableCell> */}
         </TableRow>
       )
     })

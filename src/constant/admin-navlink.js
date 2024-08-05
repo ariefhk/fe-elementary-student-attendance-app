@@ -7,28 +7,14 @@ export const adminDashboardIcons = [
     name: "Profile",
     className: "bg-color-2 hover:bg-color-2/60 text-white",
     icon: HiOutlineUserCircle,
-    href: "/admin/profile",
+    href: "/parent/profile",
   },
   {
     id: 2,
     name: "User",
     className: "bg-color-3 hover:bg-color-3/60 text-white",
-    icon: FaUsers,
-    href: "/admin/user/teacher",
-  },
-  {
-    id: 3,
-    name: "Kelas",
-    className: "bg-color-4 hover:bg-color-4/60 text-white",
     icon: FaChalkboardTeacher,
-    href: "/admin/class",
-  },
-  {
-    id: 4,
-    name: "Siswa",
-    className: "bg-color-5 hover:bg-color-5/60 text-white",
-    icon: FaUserGraduate,
-    href: "/admin/student",
+    href: "/parent/presence",
   },
 ]
 

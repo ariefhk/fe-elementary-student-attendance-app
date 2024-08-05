@@ -13,7 +13,6 @@ const initialStudentSearchInput = {
 }
 
 export default function ParentDetailClassPage() {
-  const user = useSelector(getUser)
   const { classId, studentId } = useParams()
   const { values: searchStudentByClassValue, onChange: onChangeStudentByClass } =
     useInput(initialStudentSearchInput)
