@@ -1,10 +1,12 @@
 import { IconButton } from "@/components/common/icon-button"
+import { IconButtonLink } from "@/components/common/icon-button-link"
 import AdminAddStudentToClassDialog from "@/components/dialog/admin/add-student-to-class-dialog"
 import AdminDeleteStudentFromClassDialog from "@/components/dialog/admin/delete-student-from-clas-dialog"
 import AdminStudentListByClassTable from "@/components/table/admin/list-student-class"
 import { Input } from "@/components/ui/input"
 import useDialog from "@/hook/useDialog"
 import useInput from "@/hook/useInput"
+import { GetDownloadFile } from "@/lib/getDownloadFile"
 import { useFindStudentInsideClassQuery } from "@/store/api/student-api"
 import { useMemo, useState } from "react"
 import { FaPrint } from "react-icons/fa6"
@@ -66,9 +68,9 @@ export default function AdminDetailClassPage() {
         <div className="space-y-8">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-x-2">
-              <IconButton
+              <IconButtonLink
+                to={GetDownloadFile.getDownloadStudentInsideClass({ classId })}
                 isDisabled={isLoadingGetStudentInsideClass}
-                onClick={() => {}}
                 name="Cetak Data"
                 className="bg-color-1 font-medium w-[170px] gap-x-3 h-[45px] text-white hover:bg-white hover:text-color-1"
                 iconClassName="text-white group-hover:text-color-1"

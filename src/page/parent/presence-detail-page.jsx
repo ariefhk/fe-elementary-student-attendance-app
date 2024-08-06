@@ -125,13 +125,13 @@ export default function ParentPresentDetailPage() {
           </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-x-2">
-              <IconButton
+              {/* <IconButton
                 onClick={() => {}}
                 name="Cetak Data"
                 className="bg-color-1 font-medium w-[160px] gap-x-3 h-[45px] text-white hover:bg-white hover:text-color-1"
                 iconClassName="text-white group-hover:text-color-1"
                 Icon={FaPrint}
-              />
+              /> */}
               {displayMode === "month" && (
                 <AlertDialog>
                   <AlertDialogTrigger asChild>

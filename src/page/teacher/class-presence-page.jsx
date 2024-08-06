@@ -19,6 +19,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { MONTH_WITH_ID } from "@/constant/date"
 import useInput from "@/hook/useInput"
 import { formattedDate, getAllWeeksInMonth, getWeekOfMonth } from "@/lib/date"
+import { GetDownloadFile } from "@/lib/getDownloadFile"
 import { cn } from "@/lib/utils"
 import { useGetWeeklyAttendanceQuery } from "@/store/api/attendance-api"
 import { getUser } from "@/store/slice/user-slice"
@@ -94,9 +95,14 @@ export default function TeacherClassPresencePage() {
         <div className="space-y-8">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-x-2 ">
-              <IconButton
+              <IconButtonLink
+                to={GetDownloadFile.getDownloadWeeklyAttendance({
+                  classId,
+                  year: new Date().getFullYear(),
+                  month: choosedMonth,
+                  week: choosedWeek,
+                })}
                 isDisabled={isLoadingGetWeeklyAttendance}
-                onClick={() => {}}
                 name="Cetak Data"
                 className="bg-color-1 font-medium w-[160px] gap-x-3 h-[45px] text-white hover:bg-white hover:text-color-1"
                 iconClassName="text-white group-hover:text-color-1"
